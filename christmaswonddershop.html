@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playwrite+CU:wght@100..400&display=swap');
+        body {
+            background-color: #00ab12;
+            color: white;
+            font-family: 'Josefin Sans', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            text-align: center;
+        }
+        .countdown {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 10px;
+        }
+        .labels {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 600px;
+            font-size: 24px;
+        }
+        .countdown div, .labels div {
+            width: 100px; /* Stessa larghezza per numeri e label */
+        }
+        .countdown div {
+            font-size: 50px;
+            line-height: 1.2; /* Maggiore spaziatura tra righe */
+        }
+        img {
+            max-width: 250px; /* Dimensione moderata */
+            margin-bottom: 20px;
+        }
+        .footer {
+            font-family: 'Playwrite CU', sans-serif;
+            font-size: 24px;
+            margin-top: 40px; /* Spaziatura aggiuntiva sopra il testo */
+            line-height: 1.2; /* Maggiore spaziatura tra righe */
+        }
+        .social-icons {
+            margin-top: 40px; /* Spaziatura aggiuntiva per le icone dei social media */
+        }
+        .social-icons img {
+            width: 30px;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <img src="https://i.postimg.cc/6p5vdWTN/Progetto-senza-titolo-8.png" alt="Logo">
+    
+    <h1>Torniamo tra:</h1>
+    
+    <div class="countdown">
+        <div id="days"></div>
+        <div id="hours"></div>
+        <div id="minutes"></div>
+        <div id="seconds"></div>
+    </div>
+    
+    <div class="labels">
+        <div>giorni</div>
+        <div>ore</div>
+        <div>minuti</div>
+        <div>secondi</div>
+    </div>
+
+    <div class="footer">
+        Continua a seguirci!
+    </div>
+
+    <div class="social-icons">
+        <a href="https://rb.gy/v3v4on" target="_blank">
+            <img src="https://i.postimg.cc/25fsrVdg/icons8-facebook-nuovo-30.png" alt="Facebook">
+        </a>
+        <a href="https://t.ly/7DOaR" target="_blank">
+            <img src="https://i.postimg.cc/KvCXp91G/icons8-instagram-30.png" alt="Instagram">
+        </a>
+        <a href="https://www.tiktok.com/@christmaswondershop" target="_blank">
+            <img src="https://i.postimg.cc/DwG99qGq/icons8-tic-toc-30.png" alt="TikTok">
+        </a>
+    </div>
+
+    <script>
+        const countdown = () => {
+            const countDate = new Date('September 23, 2024 00:00:00').getTime();
+            const now = new Date().getTime();
+            const gap = countDate - now;
+
+            const second = 1000;
+            const minute = second * 60;
+            const hour = minute * 60;
+            const day = hour * 24;
+
+            const days = Math.floor(gap / day);
+            const hours = Math.floor((gap % day) / hour);
+            const minutes = Math.floor((gap % hour) / minute);
+            const seconds = Math.floor((gap % minute) / second);
+
+            document.getElementById('days').innerText = days;
+            document.getElementById('hours').innerText = hours;
+            document.getElementById('minutes').innerText = minutes;
+            document.getElementById('seconds').innerText = seconds;
+        };
+
+        setInterval(countdown, 1000);
+    </script>
+
+</body>
+</html>
