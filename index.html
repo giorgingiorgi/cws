@@ -59,11 +59,21 @@
             line-height: 1.2; /* Maggiore spaziatura tra righe */
         }
         .social-icons {
+            display: flex; /* Usa flexbox per allineare le icone orizzontalmente */
+            justify-content: center; /* Centra le icone orizzontalmente */
             margin-top: 40px; /* Spaziatura aggiuntiva per le icone dei social media */
         }
-        .social-icons img {
-            width: 30px;
+        .social-icons a {
+            display: flex;
+            align-items: center; /* Allinea le icone verticalmente */
             margin: 0 10px;
+        }
+        .social-icons img {
+            width: 30px; /* Imposta la larghezza per tutte le icone social */
+        }
+        /* Ridimensionamento per l'icona di WhatsApp */
+        .social-icons .whatsapp img {
+            width: 25px; /* WhatsApp leggermente più piccolo */
         }
     </style>
 </head>
@@ -101,11 +111,15 @@
         <a href="https://www.tiktok.com/@christmaswondershop">
             <img src="https://i.postimg.cc/DwG99qGq/icons8-tic-toc-30.png" alt="TikTok">
         </a>
+        <!-- Aggiungi l'icona di WhatsApp -->
+        <a href="http://wa.me/390316870231" target="_blank" class="whatsapp">
+            <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/whatsapp-white-icon.png" alt="WhatsApp">
+        </a>
     </div>
 
     <script>
         const countdown = () => {
-            const countDate = new Date('September 23, 2024 00:00:00').getTime();
+            const countDate = new Date('September 25, 2025 00:00:00').getTime(); // Data aggiornata
             const now = new Date().getTime();
             const gap = countDate - now;
 
