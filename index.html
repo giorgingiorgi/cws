@@ -2,13 +2,12 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Christmas Wonder Shop</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300..700;1,300..700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Playwrite+CU:wght@100..400&display=swap');
 
-        /* Resetta margini e padding */
         * {
             margin: 0;
             padding: 0;
@@ -16,22 +15,20 @@
         }
 
         body {
-            /* Sfondo a gradiente radiale per profondità */
             background: radial-gradient(circle at center, #00a81f 0%, #004d08 100%);
             color: white;
             font-family: 'Josefin Sans', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh; /* Assicura che copra l'altezza anche su mobile */
+            min-height: 100vh;
             flex-direction: column;
             text-align: center;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
+            padding: 10px;
+            overflow: hidden;
         }
 
-        /* Aggiunta di un sottile pattern "neve" sullo sfondo */
+        /* Neve di sfondo stilizzata */
         body::before {
             content: '';
             position: absolute;
@@ -40,147 +37,116 @@
                 radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 5px),
                 radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 3px);
             background-size: 550px 550px, 350px 350px;
-            background-position: 0 0, 40px 60px;
             z-index: -1;
             opacity: 0.2;
-            pointer-events: none;
         }
 
-        /* Contenitore principale effetto "Vetro" (Glassmorphism) */
         .main-container {
-            background: rgba(255, 255, 255, 0.1); /* Bianco semi-trasparente */
-            backdrop-filter: blur(10px); /* Sfocatura dello sfondo sottostante */
-            -webkit-backdrop-filter: blur(10px); /* Per Safari */
-            border-radius: 25px;
-            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 5% 3%;
             border: 1px solid rgba(255, 255, 255, 0.18);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            max-width: 800px;
-            width: 100%;
+            max-width: 900px;
+            width: 95%;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
         .logo-img {
-            max-width: 220px;
-            margin-bottom: 10px;
+            width: 40%;
+            max-width: 200px;
+            min-width: 120px;
+            margin-bottom: 20px;
             filter: drop-shadow(0 0 8px rgba(255,255,255,0.3));
         }
 
         h1 {
             font-weight: 700;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.5), 0 0 15px rgba(255, 215, 0, 0.3);
-            letter-spacing: 1px;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            margin-bottom: 25px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            white-space: nowrap;
         }
 
-        /* Nuovo stile per il messaggio di auguri finale */
-        .christmas-message {
-            display: none; /* Nascosto di default */
-            font-family: 'Playwrite CU', sans-serif;
-            font-size: 4rem;
-            color: #ffd700; /* Oro */
-            text-shadow: 0 0 20px rgba(255, 42, 42, 0.8);
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
-            to { text-shadow: 0 0 30px rgba(255, 42, 42, 1), 0 0 10px rgba(255, 215, 0, 0.8); }
-        }
-
-        /* Contenitore del countdown */
         .countdown-wrapper {
             display: flex;
             justify-content: center;
-            flex-wrap: wrap; /* Permette di andare a capo su schermi piccoli */
-            gap: 15px;
-            margin-bottom: 30px;
+            align-items: center;
+            gap: 1.5vw;
             width: 100%;
+            flex-wrap: nowrap;
+            margin-bottom: 25px;
         }
 
-        /* Le singole scatole del tempo (giorni, ore...) */
         .time-box {
-            background: rgba(0, 60, 10, 0.6); /* Verde scuro semi-trasparente */
-            border: 2px solid #ffd700; /* Bordo dorato */
-            border-radius: 15px;
-            padding: 15px 10px;
-            min-width: 110px;
+            background: rgba(0, 60, 10, 0.7);
+            border: 1.5px solid #ffd700;
+            border-radius: 12px;
+            width: 22vw; 
+            max-width: 120px;
+            padding: 10px 5px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2) inset, 0 5px 15px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .time-box:hover {
-            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .number {
-            font-size: 3.5rem;
+            font-size: clamp(1.5rem, 7vw, 3.5rem);
             font-weight: 800;
             line-height: 1;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
         .label {
-            font-size: 1.1rem;
-            color: #ffd700; /* Testo dorato per le etichette */
+            font-size: clamp(0.6rem, 2.2vw, 1rem);
+            color: #ffd700;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 8px;
+            letter-spacing: 1px;
+            margin-top: 5px;
             font-weight: 600;
         }
 
         .footer {
             font-family: 'Playwrite CU', sans-serif;
-            font-size: 1.8rem;
-            margin-top: 20px;
-            color: rgba(255,255,255,0.9);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            font-size: clamp(1.1rem, 4vw, 1.8rem);
+            margin-top: 15px;
         }
 
         .social-icons {
             display: flex;
             justify-content: center;
-            margin-top: 35px;
-            gap: 20px;
+            margin-top: 25px;
+            gap: 15px;
             background: rgba(0,0,0,0.2);
-            padding: 15px 25px;
+            padding: 10px 20px;
             border-radius: 50px;
         }
 
-        .social-icons a {
-            display: flex;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-
         .social-icons img {
-            width: 32px;
-            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
+            width: clamp(24px, 6vw, 32px);
+            transition: transform 0.3s;
         }
 
-        .social-icons .whatsapp img {
-            width: 28px;
+        .social-icons a:hover img {
+            transform: scale(1.2);
         }
 
-        /* Effetto hover sulle icone social */
-        .social-icons a:hover {
-            transform: scale(1.2) rotate(5deg);
-            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
+        .christmas-message {
+            display: none;
+            font-family: 'Playwrite CU', sans-serif;
+            font-size: clamp(2rem, 8vw, 4rem);
+            color: #ffd700;
+            animation: glow 2s ease-in-out infinite alternate;
         }
 
-        /* Media query per schermi piccoli */
-        @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
-            .time-box { min-width: 90px; padding: 10px 5px; }
-            .number { font-size: 2.5rem; }
-            .label { font-size: 0.9rem; }
-            .christmas-message { font-size: 2.5rem; }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px gold; }
+            to { text-shadow: 0 0 30px red, 0 0 10px gold; }
         }
     </style>
 </head>
@@ -189,11 +155,9 @@
     <div class="main-container">
         <img src="https://i.postimg.cc/6p5vdWTN/Progetto-senza-titolo-8.png" alt="Logo" class="logo-img">
         
-        <h1 id="main-title">Natale è tra:</h1>
+        <h1 id="main-title"></h1>
         
-        <div id="end-message" class="christmas-message">
-            BUON NATALE!
-        </div>
+        <div id="end-message" class="christmas-message"></div>
         
         <div class="countdown-wrapper" id="countdown-container">
             <div class="time-box">
@@ -214,63 +178,86 @@
             </div>
         </div>
     
-        <div class="footer">
-            Continua a seguirci!
-        </div>
+        <div class="footer">Continua a seguirci!</div>
     
         <div class="social-icons">
-            <a href="https://www.facebook.com/ChristmasWonderShop.official/">
-                <img src="https://i.postimg.cc/25fsrVdg/icons8-facebook-nuovo-30.png" alt="Facebook">
-            </a>
-            <a href="https://www.instagram.com/christmaswondershop/">
-                <img src="https://i.postimg.cc/KvCXp91G/icons8-instagram-30.png" alt="Instagram">
-            </a>
-            <a href="https://www.tiktok.com/@christmaswondershop">
-                <img src="https://i.postimg.cc/DwG99qGq/icons8-tic-toc-30.png" alt="TikTok">
-            </a>
-            <a href="http://wa.me/390316870231" target="_blank" class="whatsapp">
-                <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/whatsapp-white-icon.png" alt="WhatsApp">
-            </a>
+            <a href="https://www.facebook.com/ChristmasWonderShop.official/"><img src="https://i.postimg.cc/25fsrVdg/icons8-facebook-nuovo-30.png" alt="FB"></a>
+            <a href="https://www.instagram.com/christmaswondershop/"><img src="https://i.postimg.cc/KvCXp91G/icons8-instagram-30.png" alt="IG"></a>
+            <a href="https://www.tiktok.com/@christmaswondershop"><img src="https://i.postimg.cc/DwG99qGq/icons8-tic-toc-30.png" alt="TT"></a>
+            <a href="http://wa.me/390316870231" target="_blank"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/whatsapp-white-icon.png" alt="WA"></a>
         </div>
     </div>
 
     <script>
-        const countdown = () => {
-            // Imposta la data al 25 Dicembre 2025
-            const countDate = new Date('December 25, 2025 00:00:00').getTime(); 
-            const now = new Date().getTime();
-            const gap = countDate - now;
+        // Date di riferimento (CET)
+        const NATALE_2025 = new Date('December 25, 2025 00:00:00 GMT+0100').getTime(); // Inizio del 25 Dicembre
+        const FINE_NATALE_2025 = new Date('December 26, 2025 00:00:00 GMT+0100').getTime(); // Inizio del 26 Dicembre
+        const RITORNO_2026 = new Date('October 01, 2026 00:00:00 GMT+0200').getTime(); // Orario estivo (CEST/GMT+2) per Ottobre 2026
 
-            // Logica per quando il countdown scade
-            if (gap <= 0) {
-                // Nascondi il titolo iniziale e il contatore
-                document.getElementById('main-title').style.display = 'none';
-                document.getElementById('countdown-container').style.display = 'none';
-                
-                // Mostra il messaggio finale
-                document.getElementById('end-message').style.display = 'block';
-                return; 
+        const titleElement = document.getElementById('main-title');
+        const countdownContainer = document.getElementById('countdown-container');
+        const endMessage = document.getElementById('end-message');
+        const daysElement = document.getElementById('days');
+        const hoursElement = document.getElementById('hours');
+        const minutesElement = document.getElementById('minutes');
+        const secondsElement = document.getElementById('seconds');
+
+        const formatNumber = (num) => num < 10 ? '0' + num : num;
+
+        const updateDisplay = (title, countdownGap, endMsg) => {
+            titleElement.innerText = title;
+            endMessage.innerText = endMsg;
+
+            if (countdownGap !== null) {
+                // Modalità Countdown
+                titleElement.style.display = 'block';
+                countdownContainer.style.display = 'flex';
+                endMessage.style.display = 'none';
+
+                const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
+                const d = Math.floor(countdownGap / day);
+                const h = Math.floor((countdownGap % day) / hour);
+                const m = Math.floor((countdownGap % hour) / minute);
+                const s = Math.floor((countdownGap % minute) / second);
+
+                daysElement.innerText = formatNumber(d);
+                hoursElement.innerText = formatNumber(h);
+                minutesElement.innerText = formatNumber(m);
+                secondsElement.innerText = formatNumber(s);
+
+            } else {
+                // Modalità Messaggio
+                titleElement.style.display = 'none';
+                countdownContainer.style.display = 'none';
+                endMessage.style.display = 'block';
             }
+        }
 
-            const second = 1000;
-            const minute = second * 60;
-            const hour = minute * 60;
-            const day = hour * 24;
+        const countdown = () => {
+            const now = new Date().getTime();
 
-            const days = Math.floor(gap / day);
-            const hours = Math.floor((gap % day) / hour);
-            const minutes = Math.floor((gap % hour) / minute);
-            const seconds = Math.floor((gap % minute) / second);
+            if (now >= FINE_NATALE_2025) {
+                // CASO 1: Dopo Natale (countdown per Ottobre 2026)
+                const gap = RITORNO_2026 - now;
+                if (gap > 0) {
+                    updateDisplay('Torniamo tra:', gap, null);
+                } else {
+                    // Se Ottobre 2026 è passato, mostra un messaggio di default
+                    updateDisplay('', null, 'Siamo tornati!'); 
+                }
+            } else if (now >= NATALE_2025 && now < FINE_NATALE_2025) {
+                // CASO 2: Giorno di Natale (messaggio fisso)
+                updateDisplay('', null, 'BUON NATALE!');
 
-            // Aggiunge uno zero davanti se il numero è minore di 10 (es. 05 invece di 5)
-            document.getElementById('days').innerText = days < 10 ? '0' + days : days;
-            document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
-            document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
-            document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+            } else {
+                // CASO 3: Pre-Natale (countdown per Natale 2025)
+                const gap = NATALE_2025 - now;
+                updateDisplay('Natale è tra:', gap, null);
+            }
         };
 
-        countdown();
         setInterval(countdown, 1000);
+        countdown(); // Esegui subito per evitare ritardi iniziali
     </script>
 
 </body>
