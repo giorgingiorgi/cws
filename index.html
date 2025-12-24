@@ -81,7 +81,7 @@
 
     <img src="https://i.postimg.cc/6p5vdWTN/Progetto-senza-titolo-8.png" alt="Logo">
     
-    <h1>Torniamo tra:</h1>
+    <h1 id="main-title">Natale è tra:</h1>
     
     <div class="countdown">
         <div id="days"></div>
@@ -111,7 +111,6 @@
         <a href="https://www.tiktok.com/@christmaswondershop">
             <img src="https://i.postimg.cc/DwG99qGq/icons8-tic-toc-30.png" alt="TikTok">
         </a>
-        <!-- Aggiungi l'icona di WhatsApp -->
         <a href="http://wa.me/390316870231" target="_blank" class="whatsapp">
             <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/whatsapp-white-icon.png" alt="WhatsApp">
         </a>
@@ -119,9 +118,21 @@
 
     <script>
         const countdown = () => {
-            const countDate = new Date('September 25, 2025 00:00:00').getTime(); // Data aggiornata
+            // Modificata la data al 25 Dicembre 2025
+            const countDate = new Date('December 25, 2025 00:00:00').getTime(); 
             const now = new Date().getTime();
             const gap = countDate - now;
+
+            // Logica per quando il countdown scade
+            if (gap <= 0) {
+                // Cambia il testo del titolo
+                document.getElementById('main-title').innerText = "Buon Natale!";
+                
+                // Nasconde il countdown e le etichette per pulizia visiva
+                document.querySelector('.countdown').style.display = 'none';
+                document.querySelector('.labels').style.display = 'none';
+                return; 
+            }
 
             const second = 1000;
             const minute = second * 60;
@@ -139,6 +150,8 @@
             document.getElementById('seconds').innerText = seconds;
         };
 
+        // Avvia subito per evitare ritardi di visualizzazione
+        countdown();
         setInterval(countdown, 1000);
     </script>
 
