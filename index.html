@@ -2,11 +2,25 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Christmas Wonder Shop</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&family=Playwrite+CU:wght@100..400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome per icone perfette e uniformi -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300..700;1,300..700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Playwrite+CU:wght@100..400&display=swap');
+        :root {
+            --primary-gold: #ffd700;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            --bg-gradient: radial-gradient(circle at center, #005c1f 0%, #002e08 100%);
+        }
 
         * {
             margin: 0;
@@ -14,186 +28,284 @@
             box-sizing: border-box;
         }
 
+        html {
+            /* Fix per altezza mobile su alcuni browser */
+            height: -webkit-fill-available; 
+        }
+
         body {
-            background: radial-gradient(circle at center, #00a81f 0%, #004d08 100%);
+            background: var(--bg-gradient);
             color: white;
             font-family: 'Josefin Sans', sans-serif;
+            /* Usa dvh (dynamic viewport height) per adattarsi alle barre mobili */
+            min-height: 100vh;
+            min-height: 100dvh; 
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            flex-direction: column;
-            text-align: center;
-            padding: 10px;
-            overflow: hidden;
+            /* Gestione intelligente dello scroll */
+            overflow-x: hidden;
+            overscroll-behavior: none; /* Previene il rimbalzo su Mac/iOS */
+            position: relative;
         }
 
-        /* Neve di sfondo stilizzata */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+        /* --- Effetto Neve CSS (Fissato allo schermo) --- */
+        .snow, .snow:before, .snow:after {
+            position: fixed; /* Cambiato da absolute a fixed */
+            top: -650px;
+            left: 0;
+            bottom: 0;
+            right: 0;
             background-image: 
-                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 5px),
-                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 3px);
-            background-size: 550px 550px, 350px 350px;
+                radial-gradient(4px 4px at 100px 50px, #fff , transparent), 
+                radial-gradient(6px 6px at 200px 150px, #fff, transparent), 
+                radial-gradient(3px 3px at 300px 250px, #fff, transparent), 
+                radial-gradient(4px 4px at 400px 350px, #fff, transparent), 
+                radial-gradient(6px 6px at 500px 100px, #fff, transparent), 
+                radial-gradient(3px 3px at 50px 200px, #fff, transparent), 
+                radial-gradient(4px 4px at 150px 300px, #fff, transparent), 
+                radial-gradient(6px 6px at 250px 400px, #fff, transparent), 
+                radial-gradient(3px 3px at 350px 500px, #fff, transparent);
+            background-size: 650px 650px;
+            animation: snow 10s linear infinite;
+            content: "";
             z-index: -1;
-            opacity: 0.2;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .snow:after { margin-left: -250px; opacity: 0.2; animation-duration: 15s; animation-direction: reverse; filter: blur(2px); }
+        .snow:before { margin-left: -350px; opacity: 0.4; animation-duration: 20s; filter: blur(1px); }
+
+        @keyframes snow {
+            to { transform: translateY(650px); }
         }
 
+        /* --- Container Principale --- */
         .main-container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 5% 3%;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            max-width: 900px;
-            width: 95%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            animation: fadeIn 1s ease-out;
+            /* Margini sicuri per evitare che tocchi i bordi su schermi piccoli */
+            margin: 20px 0; 
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .logo-img {
-            width: 40%;
-            max-width: 200px;
-            min-width: 120px;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 8px rgba(255,255,255,0.3));
+            width: 180px;
+            height: auto;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 15px rgba(255,255,255,0.4));
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
         }
 
         h1 {
             font-weight: 700;
-            font-size: clamp(1.5rem, 5vw, 2.5rem);
-            margin-bottom: 25px;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
-            white-space: nowrap;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            margin-bottom: 2rem;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            letter-spacing: -1px;
         }
 
+        /* --- Countdown Grid System --- */
         .countdown-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1.5vw;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 2.5rem;
             width: 100%;
-            flex-wrap: nowrap;
-            margin-bottom: 25px;
         }
 
         .time-box {
-            background: rgba(0, 60, 10, 0.7);
-            border: 1.5px solid #ffd700;
-            border-radius: 12px;
-            width: 22vw; 
-            max-width: 120px;
-            padding: 10px 5px;
+            background: rgba(0, 30, 0, 0.4);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 16px;
+            padding: 15px 5px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, border-color 0.3s;
+        }
+
+        .time-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-gold);
         }
 
         .number {
-            font-size: clamp(1.5rem, 7vw, 3.5rem);
-            font-weight: 800;
-            line-height: 1;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.1;
+            font-variant-numeric: tabular-nums;
         }
 
         .label {
-            font-size: clamp(0.6rem, 2.2vw, 1rem);
-            color: #ffd700;
+            font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+            color: var(--primary-gold);
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-top: 5px;
             font-weight: 600;
         }
 
-        .footer {
-            font-family: 'Playwrite CU', sans-serif;
-            font-size: clamp(1.1rem, 4vw, 1.8rem);
-            margin-top: 15px;
+        /* --- Footer & Social --- */
+        .footer-text {
+            font-family: 'Playwrite CU', cursive;
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            margin-bottom: 1.5rem;
+            color: #eee;
         }
 
         .social-icons {
             display: flex;
             justify-content: center;
-            margin-top: 25px;
-            gap: 15px;
-            background: rgba(0,0,0,0.2);
-            padding: 10px 20px;
-            border-radius: 50px;
+            gap: 20px;
+            margin-top: 10px;
         }
 
-        .social-icons img {
-            width: clamp(24px, 6vw, 32px);
-            transition: transform 0.3s;
+        .social-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            text-decoration: none;
+            color: white;
+            font-size: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .social-icons a:hover img {
-            transform: scale(1.2);
+        .social-btn:hover {
+            background: white;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
 
+        .social-btn:hover .fa-facebook-f { color: #1877F2; }
+        .social-btn:hover .fa-instagram { color: #E4405F; }
+        .social-btn:hover .fa-tiktok { color: #000000; }
+        .social-btn:hover .fa-whatsapp { color: #25D366; }
+
+        /* --- Messaggio Speciale --- */
         .christmas-message {
             display: none;
-            font-family: 'Playwrite CU', sans-serif;
-            font-size: clamp(2rem, 8vw, 4rem);
-            color: #ffd700;
-            animation: glow 2s ease-in-out infinite alternate;
+            font-family: 'Playwrite CU', cursive;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            color: var(--primary-gold);
+            animation: textGlow 2s infinite alternate;
+            padding: 20px 0;
         }
 
-        @keyframes glow {
-            from { text-shadow: 0 0 10px gold; }
-            to { text-shadow: 0 0 30px red, 0 0 10px gold; }
+        @keyframes textGlow {
+            from { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px #ff0000; }
+        }
+
+        /* --- Media Queries --- */
+        @media (max-width: 600px) {
+            .main-container {
+                padding: 2rem 1rem;
+                width: 95%;
+                margin: 10px 0; /* Riduce margine su mobile */
+            }
+            
+            .countdown-wrapper {
+                gap: 8px;
+            }
+
+            .time-box {
+                border-radius: 12px;
+                padding: 10px 2px;
+            }
+            
+            .social-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
         }
     </style>
 </head>
 <body>
 
+    <div class="snow"></div>
+
     <div class="main-container">
-        <img src="https://i.postimg.cc/6p5vdWTN/Progetto-senza-titolo-8.png" alt="Logo" class="logo-img">
+        <!-- Logo -->
+        <img src="https://i.postimg.cc/6p5vdWTN/Progetto-senza-titolo-8.png" alt="Christmas Wonder Shop Logo" class="logo-img">
         
-        <h1 id="main-title"></h1>
+        <!-- Titolo Dinamico -->
+        <h1 id="main-title">Caricamento...</h1>
         
+        <!-- Messaggio Festivo (Invisibile durante il countdown) -->
         <div id="end-message" class="christmas-message"></div>
         
+        <!-- Countdown -->
         <div class="countdown-wrapper" id="countdown-container">
             <div class="time-box">
                 <div id="days" class="number">00</div>
-                <div class="label">giorni</div>
+                <div class="label">Giorni</div>
             </div>
             <div class="time-box">
                 <div id="hours" class="number">00</div>
-                <div class="label">ore</div>
+                <div class="label">Ore</div>
             </div>
             <div class="time-box">
                 <div id="minutes" class="number">00</div>
-                <div class="label">minuti</div>
+                <div class="label">Min</div>
             </div>
             <div class="time-box">
                 <div id="seconds" class="number">00</div>
-                <div class="label">secondi</div>
+                <div class="label">Sec</div>
             </div>
         </div>
     
-        <div class="footer">Continua a seguirci!</div>
+        <div class="footer-text">Continua a seguirci!</div>
     
+        <!-- Icone Social FontAwesome -->
         <div class="social-icons">
-            <a href="https://www.facebook.com/ChristmasWonderShop.official/"><img src="https://i.postimg.cc/25fsrVdg/icons8-facebook-nuovo-30.png" alt="FB"></a>
-            <a href="https://www.instagram.com/christmaswondershop/"><img src="https://i.postimg.cc/KvCXp91G/icons8-instagram-30.png" alt="IG"></a>
-            <a href="https://www.tiktok.com/@christmaswondershop"><img src="https://i.postimg.cc/DwG99qGq/icons8-tic-toc-30.png" alt="TT"></a>
-            <a href="http://wa.me/390316870231" target="_blank"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/whatsapp-white-icon.png" alt="WA"></a>
+            <a href="https://www.facebook.com/ChristmasWonderShop.official/" target="_blank" class="social-btn" aria-label="Facebook">
+                <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com/christmaswondershop/" target="_blank" class="social-btn" aria-label="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://www.tiktok.com/@christmaswondershop" target="_blank" class="social-btn" aria-label="TikTok">
+                <i class="fa-brands fa-tiktok"></i>
+            </a>
+            <a href="http://wa.me/390316870231" target="_blank" class="social-btn" aria-label="WhatsApp">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
         </div>
     </div>
 
     <script>
-        // Date di riferimento (CET)
-        const NATALE_2025 = new Date('December 25, 2025 00:00:00 GMT+0100').getTime(); // Inizio del 25 Dicembre
-        const FINE_NATALE_2025 = new Date('December 26, 2025 00:00:00 GMT+0100').getTime(); // Inizio del 26 Dicembre
-        const RITORNO_2026 = new Date('October 01, 2026 00:00:00 GMT+0200').getTime(); // Orario estivo (CEST/GMT+2) per Ottobre 2026
-
         const titleElement = document.getElementById('main-title');
         const countdownContainer = document.getElementById('countdown-container');
         const endMessage = document.getElementById('end-message');
@@ -204,29 +316,26 @@
 
         const formatNumber = (num) => num < 10 ? '0' + num : num;
 
-        const updateDisplay = (title, countdownGap, endMsg) => {
+        const updateUI = (title, gap, msg, isCountdown = true) => {
             titleElement.innerText = title;
-            endMessage.innerText = endMsg;
+            endMessage.innerText = msg || '';
 
-            if (countdownGap !== null) {
-                // Modalità Countdown
+            if (isCountdown) {
                 titleElement.style.display = 'block';
-                countdownContainer.style.display = 'flex';
+                countdownContainer.style.display = 'grid'; // Grid display
                 endMessage.style.display = 'none';
 
                 const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
-                const d = Math.floor(countdownGap / day);
-                const h = Math.floor((countdownGap % day) / hour);
-                const m = Math.floor((countdownGap % hour) / minute);
-                const s = Math.floor((countdownGap % minute) / second);
+                const d = Math.floor(gap / day);
+                const h = Math.floor((gap % day) / hour);
+                const m = Math.floor((gap % hour) / minute);
+                const s = Math.floor((gap % minute) / second);
 
                 daysElement.innerText = formatNumber(d);
                 hoursElement.innerText = formatNumber(h);
                 minutesElement.innerText = formatNumber(m);
                 secondsElement.innerText = formatNumber(s);
-
             } else {
-                // Modalità Messaggio
                 titleElement.style.display = 'none';
                 countdownContainer.style.display = 'none';
                 endMessage.style.display = 'block';
@@ -234,30 +343,53 @@
         }
 
         const countdown = () => {
-            const now = new Date().getTime();
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            
+            // Definiamo le date chiave dinamicamente in base all'anno corrente
+            const christmasDate = new Date(`December 25, ${currentYear} 00:00:00`).getTime();
+            const endOfChristmas = new Date(`December 26, ${currentYear} 23:59:59`).getTime();
+            
+            // Ottobre 1 per l'apertura negozio (se siamo a gen-settembre, è quest'anno. Se siamo a nov-dic, è l'anno prossimo)
+            let returnDateYear = currentYear;
+            if (now.getMonth() > 9) { // Se siamo dopo Ottobre (Nov/Dic), il ritorno è l'anno prossimo
+                returnDateYear = currentYear + 1;
+            }
+            const returnDate = new Date(`October 01, ${returnDateYear} 00:00:00`).getTime();
 
-            if (now >= FINE_NATALE_2025) {
-                // CASO 1: Dopo Natale (countdown per Ottobre 2026)
-                const gap = RITORNO_2026 - now;
-                if (gap > 0) {
-                    updateDisplay('Torniamo tra:', gap, null);
-                } else {
-                    // Se Ottobre 2026 è passato, mostra un messaggio di default
-                    updateDisplay('', null, 'Siamo tornati!'); 
+            const nowTime = now.getTime();
+
+            // LOGICA DI FLUSSO:
+            // 1. È il giorno di Natale? (25 Dic - 26 Dic)
+            if (nowTime >= christmasDate && nowTime <= endOfChristmas) {
+                updateUI('', 0, 'BUON NATALE!', false);
+            } 
+            // 2. Siamo nel periodo di attesa per l'apertura (es. Gennaio - Settembre)?
+            //    Verifichiamo se oggi è PRIMA del 1 Ottobre
+            else if (nowTime < returnDate && now.getMonth() < 9) {
+                 const gap = returnDate - nowTime;
+                 updateUI('Torniamo tra:', gap, null, true);
+            }
+            // 3. Siamo tra il 26 Dicembre e la fine dell'anno? -> Conto alla rovescia per Ottobre anno prossimo
+            else if (nowTime > endOfChristmas) {
+                const nextReturn = new Date(`October 01, ${currentYear + 1} 00:00:00`).getTime();
+                const gap = nextReturn - nowTime;
+                updateUI('Torniamo tra:', gap, null, true);
+            }
+            // 4. Altrimenti, siamo nel periodo pre-Natale (Ottobre - 24 Dicembre)
+            else {
+                // Se per qualche motivo Natale è passato (logica fallback), puntiamo al prossimo
+                let targetXmas = christmasDate;
+                if (nowTime > christmasDate) {
+                    targetXmas = new Date(`December 25, ${currentYear + 1} 00:00:00`).getTime();
                 }
-            } else if (now >= NATALE_2025 && now < FINE_NATALE_2025) {
-                // CASO 2: Giorno di Natale (messaggio fisso)
-                updateDisplay('', null, 'BUON NATALE!');
-
-            } else {
-                // CASO 3: Pre-Natale (countdown per Natale 2025)
-                const gap = NATALE_2025 - now;
-                updateDisplay('Natale è tra:', gap, null);
+                const gap = targetXmas - nowTime;
+                updateUI('Natale è tra:', gap, null, true);
             }
         };
 
         setInterval(countdown, 1000);
-        countdown(); // Esegui subito per evitare ritardi iniziali
+        countdown();
     </script>
 
 </body>
