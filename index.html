@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&family=Playwrite+CU:wght@100..400&display=swap" rel="stylesheet">
     
-    <!-- FontAwesome per icone perfette e uniformi -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -29,30 +29,27 @@
         }
 
         html {
-            /* Fix per altezza mobile su alcuni browser */
-            height: -webkit-fill-available; 
+            min-height: 100%;
+            background: var(--bg-gradient);
         }
 
         body {
-            background: var(--bg-gradient);
             color: white;
             font-family: 'Josefin Sans', sans-serif;
-            /* Usa dvh (dynamic viewport height) per adattarsi alle barre mobili */
-            min-height: 100vh;
-            min-height: 100dvh; 
+            min-height: 100%;
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Gestione intelligente dello scroll */
             overflow-x: hidden;
-            overscroll-behavior: none; /* Previene il rimbalzo su Mac/iOS */
+            overscroll-behavior: none;
             position: relative;
+            background: transparent;
         }
 
-        /* --- Effetto Neve CSS (Fissato allo schermo) --- */
+        /* --- Effetto Neve --- */
         .snow, .snow:before, .snow:after {
-            position: fixed; /* Cambiato da absolute a fixed */
+            position: fixed;
             top: -650px;
             left: 0;
             bottom: 0;
@@ -70,7 +67,7 @@
             background-size: 650px 650px;
             animation: snow 10s linear infinite;
             content: "";
-            z-index: -1;
+            z-index: 0;
             opacity: 0.3;
             pointer-events: none;
         }
@@ -96,8 +93,7 @@
             position: relative;
             z-index: 10;
             animation: fadeIn 1s ease-out;
-            /* Margini sicuri per evitare che tocchi i bordi su schermi piccoli */
-            margin: 20px 0; 
+            margin: 20px 0;
         }
 
         @keyframes fadeIn {
@@ -232,7 +228,7 @@
             .main-container {
                 padding: 2rem 1rem;
                 width: 95%;
-                margin: 10px 0; /* Riduce margine su mobile */
+                margin: 10px 0;
             }
             
             .countdown-wrapper {
@@ -263,7 +259,7 @@
         <!-- Titolo Dinamico -->
         <h1 id="main-title">Caricamento...</h1>
         
-        <!-- Messaggio Festivo (Invisibile durante il countdown) -->
+        <!-- Messaggio Festivo -->
         <div id="end-message" class="christmas-message"></div>
         
         <!-- Countdown -->
@@ -288,7 +284,7 @@
     
         <div class="footer-text">Continua a seguirci!</div>
     
-        <!-- Icone Social FontAwesome -->
+        <!-- Icone Social -->
         <div class="social-icons">
             <a href="https://www.facebook.com/ChristmasWonderShop.official/" target="_blank" class="social-btn" aria-label="Facebook">
                 <i class="fa-brands fa-facebook-f"></i>
@@ -322,7 +318,7 @@
 
             if (isCountdown) {
                 titleElement.style.display = 'block';
-                countdownContainer.style.display = 'grid'; // Grid display
+                countdownContainer.style.display = 'grid';
                 endMessage.style.display = 'none';
 
                 const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
@@ -346,39 +342,25 @@
             const now = new Date();
             const currentYear = now.getFullYear();
             
-            // Definiamo le date chiave dinamicamente in base all'anno corrente
             const christmasDate = new Date(`December 25, ${currentYear} 00:00:00`).getTime();
             const endOfChristmas = new Date(`December 26, ${currentYear} 23:59:59`).getTime();
             
-            // Ottobre 1 per l'apertura negozio (se siamo a gen-settembre, è quest'anno. Se siamo a nov-dic, è l'anno prossimo)
             let returnDateYear = currentYear;
-            if (now.getMonth() > 9) { // Se siamo dopo Ottobre (Nov/Dic), il ritorno è l'anno prossimo
-                returnDateYear = currentYear + 1;
-            }
+            if (now.getMonth() > 9) { returnDateYear = currentYear + 1; }
             const returnDate = new Date(`October 01, ${returnDateYear} 00:00:00`).getTime();
 
             const nowTime = now.getTime();
 
-            // LOGICA DI FLUSSO:
-            // 1. È il giorno di Natale? (25 Dic - 26 Dic)
             if (nowTime >= christmasDate && nowTime <= endOfChristmas) {
                 updateUI('', 0, 'BUON NATALE!', false);
-            } 
-            // 2. Siamo nel periodo di attesa per l'apertura (es. Gennaio - Settembre)?
-            //    Verifichiamo se oggi è PRIMA del 1 Ottobre
-            else if (nowTime < returnDate && now.getMonth() < 9) {
-                 const gap = returnDate - nowTime;
-                 updateUI('Torniamo tra:', gap, null, true);
-            }
-            // 3. Siamo tra il 26 Dicembre e la fine dell'anno? -> Conto alla rovescia per Ottobre anno prossimo
-            else if (nowTime > endOfChristmas) {
+            } else if (nowTime < returnDate && now.getMonth() < 9) {
+                const gap = returnDate - nowTime;
+                updateUI('Torniamo tra:', gap, null, true);
+            } else if (nowTime > endOfChristmas) {
                 const nextReturn = new Date(`October 01, ${currentYear + 1} 00:00:00`).getTime();
                 const gap = nextReturn - nowTime;
                 updateUI('Torniamo tra:', gap, null, true);
-            }
-            // 4. Altrimenti, siamo nel periodo pre-Natale (Ottobre - 24 Dicembre)
-            else {
-                // Se per qualche motivo Natale è passato (logica fallback), puntiamo al prossimo
+            } else {
                 let targetXmas = christmasDate;
                 if (nowTime > christmasDate) {
                     targetXmas = new Date(`December 25, ${currentYear + 1} 00:00:00`).getTime();
