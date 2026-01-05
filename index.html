@@ -146,7 +146,6 @@
 
         .time-box {
             background: rgba(0, 30, 0, 0.4);
-            /* Uso il colore chiaro del gradiente per il bordo trasparente */
             border: 1px solid rgba(253, 236, 163, 0.3);
             border-radius: 16px;
             padding: 15px 5px;
@@ -160,7 +159,6 @@
 
         .time-box:hover {
             transform: translateY(-5px);
-            /* Al passaggio del mouse diventa il colore chiaro solido */
             border-color: var(--gold-light);
         }
 
@@ -178,13 +176,11 @@
             letter-spacing: 1px;
             margin-top: 5px;
             font-weight: 600;
-            
-            /* Applicazione Gradiente al Testo */
             background: var(--gold-gradient);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            color: transparent; /* Fallback */
+            color: transparent;
             display: inline-block;
         }
 
@@ -239,14 +235,11 @@
             display: none;
             font-family: 'Playwrite CU', cursive;
             font-size: clamp(2rem, 6vw, 3.5rem);
-            
-            /* Applicazione Gradiente */
             background: var(--gold-gradient);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
             color: transparent;
-
             animation: textGlow 2s infinite alternate;
             padding: 20px 0;
         }
@@ -256,37 +249,32 @@
             to { text-shadow: 0 0 20px rgba(253, 236, 163, 0.8), 0 0 30px #ff0000; }
         }
 
-        /* --- STILE CURIOSITA' (OTTIMIZZATO) --- */
-        .facts-container {
+        /* --- STILE SEZIONI (Curiosità & Radio) --- */
+        .section-separator {
             margin-top: 2rem;
             padding-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.15);
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            width: 100%;
         }
 
         .section-heading {
             font-family: 'Playwrite CU', cursive;
             font-size: 1.5rem;
-            margin-bottom: 1rem;
-            
-            /* Applicazione Gradiente */
+            margin-bottom: 1.5rem;
             background: var(--gold-gradient);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
             color: transparent;
-
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
         }
 
-        /* Icona dentro l'heading deve ereditare il background clip */
         .section-heading i {
             background: inherit;
             -webkit-background-clip: inherit;
@@ -298,7 +286,7 @@
             font-size: 1.1rem;
             font-style: italic;
             color: #f0f0f0;
-            min-height: 120px; 
+            min-height: 100px; 
             display: flex;
             align-items: center;
             justify-content: center;
@@ -310,19 +298,14 @@
         }
 
         .gold-button {
-            /* Applicazione Gradiente Sfondo */
             background: var(--gold-gradient);
-            
             color: #002e08;
             padding: 0.75rem 1.5rem;
             border-radius: 9999px;
             font-family: 'Josefin Sans', sans-serif;
             font-weight: 700;
             font-size: 1rem;
-            
-            /* Bordo con colore scuro del gradiente per contrasto */
             border: 2px solid var(--gold-dark);
-            
             box-shadow: 0 4px 15px rgba(197, 149, 65, 0.4);
             transition: all 0.3s ease;
             cursor: pointer;
@@ -342,32 +325,118 @@
             filter: brightness(1.1);
         }
 
-        .gold-button:active {
-            transform: translateY(0);
+        /* --- STILE RADIO POLO NORD --- */
+        .radio-container {
+            width: 100%;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .radio-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .visualizer {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 20px;
+        }
+
+        .bar {
+            width: 3px;
+            background: var(--gold-gradient);
+            border-radius: 2px;
+            height: 5px;
+            transition: height 0.2s ease;
+        }
+
+        .bar.animating {
+            animation: equalize 1s infinite alternate;
+        }
+
+        .bar:nth-child(2) { animation-delay: 0.2s; }
+        .bar:nth-child(3) { animation-delay: 0.4s; }
+        .bar:nth-child(4) { animation-delay: 0.1s; }
+        .bar:nth-child(5) { animation-delay: 0.3s; }
+
+        @keyframes equalize {
+            0% { height: 5px; }
+            100% { height: 20px; }
+        }
+
+        .radio-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .play-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gold-gradient);
+            border: none;
+            color: #002e08;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 10px rgba(197, 149, 65, 0.3);
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .volume-slider {
+            -webkit-appearance: none;
+            width: 80px;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: var(--gold-light);
+            border-radius: 50%;
+            cursor: pointer;
         }
 
         /* --- Media Queries --- */
         @media (max-width: 600px) {
             .main-container {
-                padding: 2rem 1rem;
+                padding: 2rem 1.5rem;
                 width: 95%;
                 margin: 20px 0;
             }
-            
-            .countdown-wrapper {
-                gap: 8px;
-            }
-
-            .time-box {
-                border-radius: 12px;
-                padding: 10px 2px;
-            }
-            
-            .social-btn {
-                width: 45px;
-                height: 45px;
-                font-size: 1.3rem;
-            }
+            .countdown-wrapper { gap: 8px; }
+            .time-box { border-radius: 12px; padding: 10px 2px; }
+            .social-btn { width: 45px; height: 45px; font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -407,7 +476,7 @@
     
         <div class="footer-text">Continua a seguirci!</div>
     
-        <!-- Icone Social con YouTube -->
+        <!-- Icone Social -->
         <div class="social-icons">
             <a href="https://www.facebook.com/ChristmasWonderShop.official/" target="_blank" class="social-btn" aria-label="Facebook">
                 <i class="fa-brands fa-facebook-f"></i>
@@ -426,8 +495,8 @@
             </a>
         </div>
 
-        <!-- NUOVA SEZIONE: Curiosità Magiche -->
-        <section id="fun-facts" class="facts-container">
+        <!-- SEZIONE: Curiosità Magiche -->
+        <section id="fun-facts" class="section-separator">
             <h2 class="section-heading">
                 <i class="fa-solid fa-star"></i>
                 Curiosità Magiche
@@ -438,6 +507,44 @@
             <button id="next-fact-btn" class="gold-button">
                 <i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 8px;"></i> Prossima Curiosità
             </button>
+        </section>
+
+        <!-- SEZIONE: Radio del Polo Nord -->
+        <section id="north-pole-radio" class="section-separator">
+            <h2 class="section-heading">
+                <i class="fa-solid fa-radio"></i>
+                Radio Polo Nord
+            </h2>
+            
+            <div class="radio-container">
+                <div class="radio-info">
+                    <div class="visualizer" id="visualizer">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                    <span class="label" style="font-size: 1.1rem; margin-top: 0;">In Onda: Atmosfera Natalizia</span>
+                </div>
+                
+                <div class="radio-controls">
+                    <button class="play-btn" id="audio-toggle" aria-label="Play/Pause">
+                        <i class="fa-solid fa-play" id="play-icon"></i>
+                    </button>
+                    <div class="volume-control">
+                        <i class="fa-solid fa-volume-low" style="color: var(--gold-light); font-size: 0.8rem;"></i>
+                        <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
+                        <i class="fa-solid fa-volume-high" style="color: var(--gold-light); font-size: 0.8rem;"></i>
+                    </div>
+                </div>
+
+                <!-- Audio Element -->
+                <audio id="bg-music" loop>
+                    <source src="https://www.dropbox.com/scl/fi/gjr0fhcpmizhvbqoggyq0/mixkit-holidays-2-691.mp3?rlkey=n9n69jhy0emhnrdwp9fagg0j8&st=vq2hs319&dl=1" type="audio/mpeg">
+                    Il tuo browser non supporta l'audio.
+                </audio>
+            </div>
         </section>
 
     </div>
@@ -456,7 +563,7 @@
 
         const updateUI = (title, gap, msg, isCountdown = true) => {
             titleElement.innerText = title;
-            endMessage.innerText = msg || '';
+            if (endMessage) endMessage.innerText = msg || '';
 
             if (isCountdown) {
                 titleElement.style.display = 'block';
@@ -483,14 +590,11 @@
         const countdown = () => {
             const now = new Date();
             const currentYear = now.getFullYear();
-            
             const christmasDate = new Date(`December 25, ${currentYear} 00:00:00`).getTime();
             const endOfChristmas = new Date(`December 26, ${currentYear} 23:59:59`).getTime();
-            
             let returnDateYear = currentYear;
             if (now.getMonth() > 9) { returnDateYear = currentYear + 1; }
             const returnDate = new Date(`October 01, ${returnDateYear} 00:00:00`).getTime();
-
             const nowTime = now.getTime();
 
             if (nowTime >= christmasDate && nowTime <= endOfChristmas) {
@@ -504,9 +608,7 @@
                 updateUI('Torniamo tra:', gap, null, true);
             } else {
                 let targetXmas = christmasDate;
-                if (nowTime > christmasDate) {
-                    targetXmas = new Date(`December 25, ${currentYear + 1} 00:00:00`).getTime();
-                }
+                if (nowTime > christmasDate) targetXmas = new Date(`December 25, ${currentYear + 1} 00:00:00`).getTime();
                 const gap = targetXmas - nowTime;
                 updateUI('Natale è tra:', gap, null, true);
             }
@@ -515,7 +617,7 @@
         setInterval(countdown, 1000);
         countdown();
 
-        // --- LOGICA CURIOSITA' (OTTIMIZZATA PER IPAD/MOBILE) ---
+        // --- LOGICA CURIOSITA' ---
         const funFacts = [
             "Sapevi che Babbo Natale è noto come 'Sinterklaas' nei Paesi Bassi?",
             "Il canto di Natale più registrato è 'Silent Night'.",
@@ -531,47 +633,62 @@
             "I bastoncini di zucchero rossi e bianchi furono inventati per tenere i bambini tranquilli in chiesa.",
             "Jingle Bells fu originariamente scritta per la festa del Ringraziamento, non per il Natale.",
             "In Polonia, i ragni sono considerati simboli di fortuna natalizia e si trovano spesso sugli alberi.",
-            "Gli astronauti a bordo della Gemini 6 fecero il primo scherzo spaziale suonando Jingle Bells nel 1965.",
             "L'albero di Natale del Rockefeller Center a New York è illuminato da oltre 50.000 luci LED.",
             "In Svezia, quasi tutta la nazione guarda i cartoni di Paperino il pomeriggio della vigilia di Natale."
         ];
 
         let currentFactIndex = 0;
-        let isAnimating = false; // Flag per prevenire click rapidi che causano glitch
+        let isFactAnimating = false;
         const currentFactElement = document.getElementById('current-fact');
         const nextFactButton = document.getElementById('next-fact-btn');
 
         const showNextFact = () => {
-            // Se stiamo già animando, ignoriamo il click
-            if (isAnimating) return;
-            
-            isAnimating = true;
+            if (isFactAnimating) return;
+            isFactAnimating = true;
             currentFactElement.style.opacity = 0;
-            
             setTimeout(() => {
-                // Aggiorniamo il testo solo quando è invisibile
-                if (currentFactIndex >= funFacts.length) {
-                    currentFactIndex = 0;
-                }
+                if (currentFactIndex >= funFacts.length) currentFactIndex = 0;
                 currentFactElement.innerText = funFacts[currentFactIndex];
                 currentFactIndex++;
-                
-                // Piccola pausa per assicurare che il rendering sia pulito su iOS
                 requestAnimationFrame(() => {
                     currentFactElement.style.opacity = 1;
-                    // Sblocchiamo il pulsante solo alla fine dell'animazione
-                    setTimeout(() => {
-                        isAnimating = false;
-                    }, 300);
+                    setTimeout(() => isFactAnimating = false, 300);
                 });
-            }, 300); // Deve coincidere con transition del CSS
+            }, 300);
         };
 
         nextFactButton.addEventListener('click', showNextFact);
-        
-        // Avvio curiosità iniziale
         currentFactElement.innerText = funFacts[0];
         currentFactIndex = 1;
+
+        // --- LOGICA RADIO POLO NORD ---
+        const audio = document.getElementById('bg-music');
+        const audioToggle = document.getElementById('audio-toggle');
+        const playIcon = document.getElementById('play-icon');
+        const volumeSlider = document.getElementById('volume-slider');
+        const bars = document.querySelectorAll('.bar');
+
+        audioToggle.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playIcon.classList.remove('fa-play');
+                playIcon.classList.add('fa-pause');
+                bars.forEach(bar => bar.classList.add('animating'));
+            } else {
+                audio.pause();
+                playIcon.classList.remove('fa-pause');
+                playIcon.classList.add('fa-play');
+                bars.forEach(bar => bar.classList.remove('animating'));
+            }
+        });
+
+        volumeSlider.addEventListener('input', (e) => {
+            audio.volume = e.target.value;
+        });
+
+        // Impostazione volume iniziale
+        audio.volume = 0.5;
+
     </script>
 
 </body>
