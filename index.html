@@ -178,6 +178,7 @@
             justify-content: center;
             gap: 20px;
             margin-top: 10px;
+            margin-bottom: 2.5rem; /* Aggiunto margine per separare dalle curiosità */
         }
 
         .social-btn {
@@ -222,6 +223,72 @@
         @keyframes textGlow {
             from { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
             to { text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px #ff0000; }
+        }
+
+        /* --- STILE CURIOSITA' (NUOVO) --- */
+        .facts-container {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-heading {
+            font-family: 'Playwrite CU', cursive;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .fact-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #f0f0f0;
+            min-height: 80px; /* Altezza minima per evitare salti */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 1rem;
+            line-height: 1.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .gold-button {
+            background: linear-gradient(135deg, #ffd700 0%, #ffeebb 50%, #ffd700 100%);
+            color: #002e08; /* Verde scuro per contrasto */
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            border: 2px solid #b8860b;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            outline: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .gold-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+            filter: brightness(1.1);
+        }
+
+        .gold-button:active {
+            transform: translateY(0);
         }
 
         /* --- Media Queries --- */
@@ -303,9 +370,25 @@
                 <i class="fa-brands fa-youtube"></i>
             </a>
         </div>
+
+        <!-- NUOVA SEZIONE: Curiosità Magiche -->
+        <section id="fun-facts" class="facts-container">
+            <h2 class="section-heading">
+                <i class="fa-solid fa-star"></i>
+                Curiosità Magiche
+            </h2>
+            <p id="current-fact" class="fact-text">
+                Caricamento curiosità...
+            </p>
+            <button id="next-fact-btn" class="gold-button">
+                <i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 8px;"></i> Prossima Curiosità
+            </button>
+        </section>
+
     </div>
 
     <script>
+        // --- LOGICA COUNTDOWN ---
         const titleElement = document.getElementById('main-title');
         const countdownContainer = document.getElementById('countdown-container');
         const endMessage = document.getElementById('end-message');
@@ -376,6 +459,49 @@
 
         setInterval(countdown, 1000);
         countdown();
+
+        // --- LOGICA CURIOSITA' ---
+        const funFacts = [
+            "Sapevi che Babbo Natale è noto come 'Sinterklaas' nei Paesi Bassi?",
+            "Il canto di Natale più registrato è 'Silent Night'.",
+            "L'albero di Natale è stato decorato per la prima volta in Germania.",
+            "Le renne di Babbo Natale sono 9, e Rudolph è la più famosa.",
+            "Il periodo natalizio è in realtà di 12 giorni, che terminano con l'Epifania.",
+            "Tradizionalmente, gli addobbi dorati e argentati simboleggiano la luna e il sole.",
+            "Il primo presepe della storia fu realizzato da San Francesco d'Assisi nel 1223.",
+            "In Islanda, i bambini ricevono visite da 13 diversi 'Folletti di Natale'.",
+            "Le canzoni di Natale venivano cantate originariamente in tutte le stagioni.",
+            "In Giappone, è tradizione cenare da KFC per il giorno di Natale!",
+            "La statua della Libertà è stata tecnicamente il più grande regalo di Natale della storia.",
+            "I bastoncini di zucchero rossi e bianchi furono inventati per tenere i bambini tranquilli in chiesa.",
+            "Jingle Bells fu originariamente scritta per la festa del Ringraziamento, non per il Natale.",
+            "In Polonia, i ragni sono considerati simboli di fortuna natalizia e si trovano spesso sugli alberi.",
+            "Gli astronauti a bordo della Gemini 6 fecero il primo scherzo spaziale suonando Jingle Bells nel 1965.",
+            "L'albero di Natale del Rockefeller Center a New York è illuminato da oltre 50.000 luci LED.",
+            "In Svezia, quasi tutta la nazione guarda i cartoni di Paperino il pomeriggio della vigilia di Natale."
+        ];
+
+        let currentFactIndex = 0;
+        const currentFactElement = document.getElementById('current-fact');
+        const nextFactButton = document.getElementById('next-fact-btn');
+
+        const showNextFact = () => {
+            currentFactElement.style.opacity = 0;
+            
+            setTimeout(() => {
+                if (currentFactIndex >= funFacts.length) {
+                    currentFactIndex = 0;
+                }
+                currentFactElement.innerText = funFacts[currentFactIndex];
+                currentFactIndex++;
+                currentFactElement.style.opacity = 1;
+            }, 300);
+        };
+
+        nextFactButton.addEventListener('click', showNextFact);
+        
+        // Avvio curiosità
+        showNextFact();
     </script>
 
 </body>
