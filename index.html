@@ -271,7 +271,8 @@
 
         .section-heading {
             font-family: 'Playwrite CU', cursive;
-            font-size: 1.5rem;
+            /* Modifica per mobile: clamp leggermente ridotto nel minimo e nowrap */
+            font-size: clamp(1.3rem, 4vw, 1.8rem); 
             margin-bottom: 1.5rem;
             background: var(--gold-gradient);
             -webkit-background-clip: text;
@@ -285,6 +286,9 @@
             padding-right: 0.3em; 
             padding-bottom: 0.3em;
             line-height: 1.6;
+            
+            /* MODIFICA RICHIESTA: Impedisce al titolo di andare a capo */
+            white-space: nowrap; 
         }
 
         .section-heading i {
@@ -555,15 +559,16 @@
                 </div>
                 
                 <div class="radio-controls">
-                    <button class="control-btn" id="prev-btn" aria-label="Casuale">
-                        <i class="fa-solid fa-shuffle"></i>
+                    <!-- MODIFICA: Pulsante Indietro invece di Shuffle -->
+                    <button class="control-btn" id="prev-btn" aria-label="Brano Precedente">
+                        <i class="fa-solid fa-backward-step"></i>
                     </button>
 
                     <button class="play-btn" id="audio-toggle" aria-label="Play/Pause">
                         <i class="fa-solid fa-play" id="play-icon"></i>
                     </button>
 
-                    <button class="control-btn" id="next-btn" aria-label="Prossima">
+                    <button class="control-btn" id="next-btn" aria-label="Brano Successivo">
                         <i class="fa-solid fa-forward-step"></i>
                     </button>
                     
@@ -574,7 +579,7 @@
                     </div>
                 </div>
 
-                <audio id="bg-music" playsinline preload="auto">
+                <audio id="bg-music" playsinline preload="none">
                     Il tuo browser non supporta l'audio.
                 </audio>
             </div>
@@ -694,8 +699,14 @@
         currentFactElement.innerText = funFacts[0];
         currentFactIndex = 1;
 
-        // --- LOGICA RADIO POLO NORD (Playlist Casuale) ---
+        // --- LOGICA RADIO POLO NORD ---
         
+        // Funzione per convertire i link Dropbox per iOS/Streaming diretto
+        // Sostituisce www.dropbox.com con dl.dropboxusercontent.com
+        const formatDropboxUrl = (url) => {
+            return url.replace('www.dropbox.com', 'dl.dropboxusercontent.com').replace('?dl=1', '');
+        };
+
         const playlist = [
             {
                 title: "Conciati per le feste",
@@ -727,7 +738,7 @@
             }
         ];
 
-        let currentTrackIndex = -1;
+        let currentTrackIndex = 0;
         let isPlaying = false;
 
         const audio = document.getElementById('bg-music');
@@ -738,30 +749,31 @@
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
 
-        // Funzione per caricare una traccia casuale diversa dalla precedente
-        const loadRandomTrack = () => {
-            let nextIndex;
-            do {
-                nextIndex = Math.floor(Math.random() * playlist.length);
-            } while (nextIndex === currentTrackIndex && playlist.length > 1);
-            
-            currentTrackIndex = nextIndex;
+        // Caricamento iniziale (senza play automatico)
+        const initPlayer = () => {
             trackTitle.innerText = playlist[currentTrackIndex].title;
-            audio.src = playlist[currentTrackIndex].src;
+            // Precarichiamo l'URL formattato correttamente per iOS
+            audio.src = formatDropboxUrl(playlist[currentTrackIndex].src);
             audio.load();
         };
 
-        // Inizializzazione
-        loadRandomTrack();
-        audio.volume = 0.5;
-
+        // Funzione Play/Pause sicura per iOS
         const togglePlay = () => {
             if (audio.paused) {
-                audio.play().then(() => {
-                    isPlaying = true;
-                    playIcon.classList.remove('fa-play');
-                    playIcon.classList.add('fa-pause');
-                }).catch(e => console.log("Errore riproduzione:", e));
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        isPlaying = true;
+                        playIcon.classList.remove('fa-play');
+                        playIcon.classList.add('fa-pause');
+                    }).catch(error => {
+                        console.error("Errore riproduzione (iOS policy o rete):", error);
+                        // Su iOS, se fallisce, a volte bisogna ricaricare e riprovare
+                        isPlaying = false;
+                        playIcon.classList.remove('fa-pause');
+                        playIcon.classList.add('fa-play');
+                    });
+                }
             } else {
                 audio.pause();
                 isPlaying = false;
@@ -770,26 +782,51 @@
             }
         };
 
-        const nextTrack = () => {
-            loadRandomTrack();
-            if (isPlaying) {
-                audio.play().then(() => {
+        const changeTrack = (direction) => {
+            if (direction === 'next') {
+                currentTrackIndex++;
+                if (currentTrackIndex >= playlist.length) currentTrackIndex = 0;
+            } else {
+                currentTrackIndex--;
+                if (currentTrackIndex < 0) currentTrackIndex = playlist.length - 1;
+            }
+
+            trackTitle.innerText = playlist[currentTrackIndex].title;
+            
+            // Cambio sorgente con link formattato
+            audio.src = formatDropboxUrl(playlist[currentTrackIndex].src);
+            
+            // iOS fix: bisogna chiamare load() prima di play() quando si cambia sorgente dinamicamente
+            audio.load();
+
+            // Se stiamo già suonando o l'utente ha cliccato, proviamo a suonare
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    isPlaying = true;
                     playIcon.classList.remove('fa-play');
                     playIcon.classList.add('fa-pause');
-                });
+                }).catch(e => console.error("Auto-play prevented:", e));
             }
         };
 
+        // Inizializza il player
+        initPlayer();
+        audio.volume = 0.5;
+
         // Event Listeners
         audioToggle.addEventListener('click', togglePlay);
-        nextBtn.addEventListener('click', nextTrack);
-        prevBtn.addEventListener('click', nextTrack); // Entrambi scelgono a caso
+        
+        // Modifica: Ora usiamo changeTrack con direzione invece di logica casuale
+        nextBtn.addEventListener('click', () => changeTrack('next'));
+        prevBtn.addEventListener('click', () => changeTrack('prev'));
 
         volumeSlider.addEventListener('input', (e) => {
             audio.volume = e.target.value;
         });
 
-        audio.addEventListener('ended', nextTrack);
+        // Quando finisce la canzone, vai alla prossima
+        audio.addEventListener('ended', () => changeTrack('next'));
 
     </script>
 
