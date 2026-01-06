@@ -182,6 +182,9 @@
             -webkit-text-fill-color: transparent;
             color: transparent;
             display: inline-block;
+            padding-right: 0.3em;
+            padding-bottom: 0.2em;
+            line-height: 1.4;
         }
 
         /* --- Footer & Social --- */
@@ -190,6 +193,9 @@
             font-size: clamp(1.2rem, 3vw, 1.6rem);
             margin-bottom: 1.5rem;
             color: #eee;
+            line-height: 1.8;
+            padding-bottom: 0.2em;
+            display: inline-block;
         }
 
         .social-icons {
@@ -242,6 +248,9 @@
             color: transparent;
             animation: textGlow 2s infinite alternate;
             padding: 20px 0;
+            padding-right: 0.3em; 
+            padding-bottom: 0.2em;
+            line-height: 1.6;
         }
 
         @keyframes textGlow {
@@ -273,6 +282,9 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            padding-right: 0.3em; 
+            padding-bottom: 0.3em;
+            line-height: 1.6;
         }
 
         .section-heading i {
@@ -335,62 +347,75 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
         }
 
         .radio-info {
             display: flex;
+            flex-direction: column; 
             align-items: center;
-            gap: 12px;
-            width: 100%;
             justify-content: center;
+            width: 100%;
+            text-align: center;
         }
 
-        .visualizer {
-            display: flex;
-            align-items: flex-end;
-            gap: 3px;
-            height: 20px;
+        .now-playing-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 5px;
         }
 
-        .bar {
-            width: 3px;
+        .now-playing-title {
+            font-family: 'Playwrite CU', cursive;
+            font-size: 1.3rem;
             background: var(--gold-gradient);
-            border-radius: 2px;
-            height: 5px;
-            transition: height 0.2s ease;
-        }
-
-        .bar.animating {
-            animation: equalize 1s infinite alternate;
-        }
-
-        .bar:nth-child(2) { animation-delay: 0.2s; }
-        .bar:nth-child(3) { animation-delay: 0.4s; }
-        .bar:nth-child(4) { animation-delay: 0.1s; }
-        .bar:nth-child(5) { animation-delay: 0.3s; }
-
-        @keyframes equalize {
-            0% { height: 5px; }
-            100% { height: 20px; }
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            padding-right: 0.3em;
+            padding-bottom: 0.3em;
+            line-height: 1.6;
+            min-height: 3.2rem; /* Altezza fissa per evitare salti nel layout */
         }
 
         .radio-controls {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 20px;
             width: 100%;
+        }
+
+        .control-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--gold-light);
+            color: var(--gold-light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
             justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .control-btn:hover {
+            background: var(--gold-light);
+            color: #002e08;
         }
 
         .play-btn {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             background: var(--gold-gradient);
             border: none;
             color: #002e08;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -407,6 +432,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            margin-left: 10px;
         }
 
         .volume-slider {
@@ -437,6 +463,12 @@
             .countdown-wrapper { gap: 8px; }
             .time-box { border-radius: 12px; padding: 10px 2px; }
             .social-btn { width: 45px; height: 45px; font-size: 1.3rem; }
+        }
+
+        @media (max-width: 1024px) {
+            .volume-control {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -518,20 +550,23 @@
             
             <div class="radio-container">
                 <div class="radio-info">
-                    <div class="visualizer" id="visualizer">
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                    </div>
-                    <span class="label" style="font-size: 1.1rem; margin-top: 0;">In Onda: Atmosfera Natalizia</span>
+                    <div class="now-playing-label">ORA IN ONDA:</div>
+                    <div class="now-playing-title" id="track-title">Caricamento...</div>
                 </div>
                 
                 <div class="radio-controls">
+                    <button class="control-btn" id="prev-btn" aria-label="Casuale">
+                        <i class="fa-solid fa-shuffle"></i>
+                    </button>
+
                     <button class="play-btn" id="audio-toggle" aria-label="Play/Pause">
                         <i class="fa-solid fa-play" id="play-icon"></i>
                     </button>
+
+                    <button class="control-btn" id="next-btn" aria-label="Prossima">
+                        <i class="fa-solid fa-forward-step"></i>
+                    </button>
+                    
                     <div class="volume-control">
                         <i class="fa-solid fa-volume-low" style="color: var(--gold-light); font-size: 0.8rem;"></i>
                         <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
@@ -539,9 +574,7 @@
                     </div>
                 </div>
 
-                <!-- Audio Element -->
-                <audio id="bg-music" loop>
-                    <source src="https://www.dropbox.com/scl/fi/gjr0fhcpmizhvbqoggyq0/mixkit-holidays-2-691.mp3?rlkey=n9n69jhy0emhnrdwp9fagg0j8&st=vq2hs319&dl=1" type="audio/mpeg">
+                <audio id="bg-music" playsinline preload="auto">
                     Il tuo browser non supporta l'audio.
                 </audio>
             </div>
@@ -661,33 +694,102 @@
         currentFactElement.innerText = funFacts[0];
         currentFactIndex = 1;
 
-        // --- LOGICA RADIO POLO NORD ---
+        // --- LOGICA RADIO POLO NORD (Playlist Casuale) ---
+        
+        const playlist = [
+            {
+                title: "Conciati per le feste",
+                src: "https://www.dropbox.com/scl/fi/gjr0fhcpmizhvbqoggyq0/mixkit-holidays-2-691.mp3?rlkey=n9n69jhy0emhnrdwp9fagg0j8&st=vq2hs319&dl=1"
+            },
+            {
+                title: "Danza della fata confetto",
+                src: "https://www.dropbox.com/scl/fi/s7b0wywdcxs7o77relil3/Dance-of-the-Sugar-Plum-Fairies.mp3?rlkey=z2sq7fm5mjyfybufrwbliwp4u&st=49kndceg&dl=1"
+            },
+            {
+                title: "Jingle Bells",
+                src: "https://www.dropbox.com/scl/fi/8kxfeh46y6xnm442tylqw/Jingle-Bells-7-Kevin-MacLeod-No-Copyright-Music.mp3?rlkey=0q9iw3zz2ih57eq1mpg16pwhn&st=c6ruclsa&dl=1"
+            },
+            {
+                title: "We Wish You a Merry Christmas",
+                src: "https://www.dropbox.com/scl/fi/dn7vw1bj89bkzpczrslzg/We-Wish-you-a-Merry-Christmas.mp3?rlkey=f5xg1wfoj9s2qx3ytfuk6qhln&st=1plepdnx&dl=1"
+            },
+            {
+                title: "I 12 giorni di Natale",
+                src: "https://www.dropbox.com/scl/fi/rivm35d3pthsgubu3xpp7/12-Days-of-Christmas-Instrumental.mp3?rlkey=a63ec85sa6ihyvktnwb5v9er0&st=562bihd3&dl=1"
+            },
+            {
+                title: "Gioia nel mondo",
+                src: "https://www.dropbox.com/scl/fi/nzdksa6xushqvji952nn7/Joy-to-the-World-Instrumental.mp3?rlkey=lrcuk4wb2hvu625120ofvz5w3&st=et8ocs6b&dl=1"
+            },
+            {
+                title: "Gloria in excelsis Deo",
+                src: "https://www.dropbox.com/scl/fi/soy7tvcy7ormynnavnvxy/WhatsApp-Audio-2025-11-16-at-22.21.07.mp3?rlkey=u5kd2euunuvfx4x23fv73mmgh&st=lsnpxxc2&dl=1"
+            }
+        ];
+
+        let currentTrackIndex = -1;
+        let isPlaying = false;
+
         const audio = document.getElementById('bg-music');
         const audioToggle = document.getElementById('audio-toggle');
         const playIcon = document.getElementById('play-icon');
         const volumeSlider = document.getElementById('volume-slider');
-        const bars = document.querySelectorAll('.bar');
+        const trackTitle = document.getElementById('track-title');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
 
-        audioToggle.addEventListener('click', () => {
+        // Funzione per caricare una traccia casuale diversa dalla precedente
+        const loadRandomTrack = () => {
+            let nextIndex;
+            do {
+                nextIndex = Math.floor(Math.random() * playlist.length);
+            } while (nextIndex === currentTrackIndex && playlist.length > 1);
+            
+            currentTrackIndex = nextIndex;
+            trackTitle.innerText = playlist[currentTrackIndex].title;
+            audio.src = playlist[currentTrackIndex].src;
+            audio.load();
+        };
+
+        // Inizializzazione
+        loadRandomTrack();
+        audio.volume = 0.5;
+
+        const togglePlay = () => {
             if (audio.paused) {
-                audio.play();
-                playIcon.classList.remove('fa-play');
-                playIcon.classList.add('fa-pause');
-                bars.forEach(bar => bar.classList.add('animating'));
+                audio.play().then(() => {
+                    isPlaying = true;
+                    playIcon.classList.remove('fa-play');
+                    playIcon.classList.add('fa-pause');
+                }).catch(e => console.log("Errore riproduzione:", e));
             } else {
                 audio.pause();
+                isPlaying = false;
                 playIcon.classList.remove('fa-pause');
                 playIcon.classList.add('fa-play');
-                bars.forEach(bar => bar.classList.remove('animating'));
             }
-        });
+        };
+
+        const nextTrack = () => {
+            loadRandomTrack();
+            if (isPlaying) {
+                audio.play().then(() => {
+                    playIcon.classList.remove('fa-play');
+                    playIcon.classList.add('fa-pause');
+                });
+            }
+        };
+
+        // Event Listeners
+        audioToggle.addEventListener('click', togglePlay);
+        nextBtn.addEventListener('click', nextTrack);
+        prevBtn.addEventListener('click', nextTrack); // Entrambi scelgono a caso
 
         volumeSlider.addEventListener('input', (e) => {
             audio.volume = e.target.value;
         });
 
-        // Impostazione volume iniziale
-        audio.volume = 0.5;
+        audio.addEventListener('ended', nextTrack);
 
     </script>
 
