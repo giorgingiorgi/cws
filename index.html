@@ -1,834 +1,1059 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=no">
-    <title>Christmas Wonder Shop</title>
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&family=Playwrite+CU:wght@100..400&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=no">
+<title>Christmas Wonder Shop</title>
 
-    <style>
-        :root {
-            /* NUOVO GRADIENTE */
-            --gold-gradient: linear-gradient(90deg, rgba(197,149,65,1) 0%, rgba(253,236,163,1) 100%);
-            
-            /* Colori solidi estratti dal gradiente per fallback e bordi */
-            --gold-dark: rgba(197,149,65,1);
-            --gold-light: rgba(253,236,163,1);
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&family=Playwrite+CU:wght@100..400&display=swap" rel="stylesheet">
 
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-            --bg-gradient: radial-gradient(circle at center, #005c1f 0%, #002e08 100%);
-        }
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+/* NUOVO GRADIENTE */
+--gold-gradient: linear-gradient(90deg, rgba(197,149,65,1) 0%, rgba(253,236,163,1) 100%);
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+/* Colori solidi estratti dal gradiente per fallback e bordi */
+--gold-dark: rgba(197,149,65,1);
+--gold-light: rgba(253,236,163,1);
+--glass-bg: rgba(255, 255, 255, 0.1);
+--glass-border: rgba(255, 255, 255, 0.2);
+--glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+--bg-gradient: radial-gradient(circle at center, #005c1f 0%, #002e08 100%);
+}
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+-webkit-tap-highlight-color: transparent;
+}
+html {
+min-height: 100%;
+height: 100%;
+background: var(--bg-gradient);
+overflow-x: hidden;
+}
+body {
+color: white;
+font-family: 'Josefin Sans', sans-serif;
+min-height: 100%;
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+overflow-x: hidden;
+position: relative;
+background: transparent;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+/* --- Effetto Neve Ottimizzato --- */
+.snow, .snow:before, .snow:after {
+position: fixed;
+top: -650px;
+left: 0;
+bottom: 0;
+right: 0;
+background-image:
+radial-gradient(4px 4px at 100px 50px, #fff , transparent),
+radial-gradient(6px 6px at 200px 150px, #fff, transparent),
+radial-gradient(3px 3px at 300px 250px, #fff, transparent),
+radial-gradient(4px 4px at 400px 350px, #fff, transparent),
+radial-gradient(6px 6px at 500px 100px, #fff, transparent),
+radial-gradient(3px 3px at 50px 200px, #fff, transparent),
+radial-gradient(4px 4px at 150px 300px, #fff, transparent),
+radial-gradient(6px 6px at 250px 400px, #fff, transparent),
+radial-gradient(3px 3px at 350px 500px, #fff, transparent);
+background-size: 650px 650px;
+animation: snow 10s linear infinite;
+content: "";
+z-index: 0;
+opacity: 0.3;
+pointer-events: none;
+will-change: transform;
+transform: translateZ(0);
+}
+.snow:after { margin-left: -250px; opacity: 0.2; animation-duration: 15s; animation-direction: reverse; filter: blur(2px); }
+.snow:before { margin-left: -350px; opacity: 0.4; animation-duration: 20s; filter: blur(1px); }
+@keyframes snow {
+to { transform: translateY(650px); }
+}
 
-        html {
-            min-height: 100%;
-            height: 100%;
-            background: var(--bg-gradient);
-            overflow-x: hidden;
-        }
+/* --- Top Banner Estivo --- */
+.top-banner {
+width: 100%;
+background: var(--gold-gradient);
+color: #002e08;
+text-align: center;
+padding: 12px 20px;
+font-weight: 700;
+font-size: 0.95rem;
+letter-spacing: 0.5px;
+z-index: 100;
+box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+.top-banner a {
+color: #002e08;
+text-decoration: none;
+display: inline-block;
+transition: transform 0.2s;
+}
+.top-banner a:hover {
+transform: scale(1.02);
+}
 
-        body {
-            color: white;
-            font-family: 'Josefin Sans', sans-serif;
-            min-height: 100%;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            position: relative;
-            background: transparent;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+/* --- Container Principale Ottimizzato --- */
+.main-container {
+background: var(--glass-bg);
+backdrop-filter: blur(12px);
+-webkit-backdrop-filter: blur(12px);
+border: 1px solid var(--glass-border);
+box-shadow: var(--glass-shadow);
+border-radius: 24px;
+padding: 3rem 2rem;
+width: 90%;
+max-width: 800px;
+text-align: center;
+position: relative;
+z-index: 10;
+animation: fadeIn 1s ease-out;
+margin: 40px 0;
+transform: translateZ(0);
+}
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(20px); }
+to { opacity: 1; transform: translateY(0); }
+}
+.logo-img {
+width: 180px;
+height: auto;
+margin-bottom: 1.5rem;
+filter: drop-shadow(0 0 15px rgba(255,255,255,0.4));
+transition: transform 0.3s ease;
+will-change: transform;
+}
+.logo-img:hover {
+transform: scale(1.05);
+}
+h1 {
+font-weight: 700;
+font-size: clamp(1.8rem, 4vw, 2.8rem);
+margin-bottom: 2rem;
+text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+letter-spacing: -1px;
+}
+/* --- Countdown Grid System --- */
+.countdown-wrapper {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 15px;
+margin-bottom: 2.5rem;
+width: 100%;
+}
+.time-box {
+background: rgba(0, 30, 0, 0.4);
+border: 1px solid rgba(253, 236, 163, 0.3);
+border-radius: 16px;
+padding: 15px 5px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+transition: transform 0.3s ease, border-color 0.3s;
+}
+.time-box:hover {
+transform: translateY(-5px);
+border-color: var(--gold-light);
+}
+.number {
+font-size: clamp(1.8rem, 5vw, 3.5rem);
+font-weight: 700;
+color: #fff;
+line-height: 1.1;
+font-variant-numeric: tabular-nums;
+}
+.label {
+font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+text-transform: uppercase;
+letter-spacing: 1px;
+margin-top: 5px;
+font-weight: 600;
+background: var(--gold-gradient);
+-webkit-background-clip: text;
+background-clip: text;
+-webkit-text-fill-color: transparent;
+color: transparent;
+display: inline-block;
+padding-right: 0.3em;
+padding-bottom: 0.2em;
+line-height: 1.4;
+}
+/* --- Footer & Social --- */
+.footer-text {
+font-family: 'Playwrite CU', cursive;
+font-size: clamp(1.2rem, 3vw, 1.6rem);
+margin-bottom: 1.5rem;
+color: #eee;
+line-height: 1.8;
+padding-bottom: 0.2em;
+display: inline-block;
+}
+.social-icons {
+display: flex;
+justify-content: center;
+gap: 20px;
+margin-top: 10px;
+}
+.social-btn {
+display: flex;
+justify-content: center;
+align-items: center;
+width: 50px;
+height: 50px;
+background: rgba(255, 255, 255, 0.1);
+border-radius: 50%;
+text-decoration: none;
+color: white;
+font-size: 1.5rem;
+border: 1px solid rgba(255,255,255,0.1);
+transition: all 0.3s ease;
+position: relative;
+overflow: hidden;
+transform: translateZ(0);
+}
+.social-btn:hover {
+background: white;
+transform: scale(1.1);
+box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+.social-btn:hover .fa-facebook-f { color: #1877F2; }
+.social-btn:hover .fa-instagram { color: #E4405F; }
+.social-btn:hover .fa-tiktok { color: #000000; }
+.social-btn:hover .fa-whatsapp { color: #25D366; }
+.social-btn:hover .fa-youtube { color: #FF0000; }
+/* --- Messaggio Speciale --- */
+.christmas-message {
+display: none;
+font-family: 'Playwrite CU', cursive;
+font-size: clamp(2rem, 6vw, 3.5rem);
+background: var(--gold-gradient);
+-webkit-background-clip: text;
+background-clip: text;
+-webkit-text-fill-color: transparent;
+color: transparent;
+animation: textGlow 2s infinite alternate;
+padding: 20px 0;
+padding-right: 0.3em;
+padding-bottom: 0.2em;
+line-height: 1.6;
+}
+@keyframes textGlow {
+from { text-shadow: 0 0 10px rgba(253, 236, 163, 0.3); }
+to { text-shadow: 0 0 20px rgba(253, 236, 163, 0.8), 0 0 30px #ff0000; }
+}
+/* --- STILE SEZIONI (Curiosità & Radio) --- */
+.section-separator {
+margin-top: 2rem;
+padding-top: 2rem;
+border-top: 1px solid rgba(255, 255, 255, 0.15);
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+.section-heading {
+font-family: 'Playwrite CU', cursive;
+font-size: clamp(1.3rem, 4vw, 1.8rem);
+margin-bottom: 1.5rem;
+background: var(--gold-gradient);
+-webkit-background-clip: text;
+background-clip: text;
+-webkit-text-fill-color: transparent;
+color: transparent;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+padding-right: 0.3em;
+padding-bottom: 0.3em;
+line-height: 1.6;
+white-space: nowrap;
+}
+.section-heading i {
+background: inherit;
+-webkit-background-clip: inherit;
+background-clip: inherit;
+-webkit-text-fill-color: inherit;
+}
+.fact-text {
+font-size: 1.1rem;
+font-style: italic;
+color: #f0f0f0;
+min-height: 100px;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 0 1rem;
+line-height: 1.6;
+transition: opacity 0.3s ease-in-out;
+will-change: opacity;
+width: 100%;
+}
+.gold-button {
+background: var(--gold-gradient);
+color: #002e08;
+padding: 0.75rem 1.5rem;
+border-radius: 9999px;
+font-family: 'Josefin Sans', sans-serif;
+font-weight: 700;
+font-size: 1rem;
+border: 2px solid var(--gold-dark);
+box-shadow: 0 4px 15px rgba(197, 149, 65, 0.4);
+text-decoration: none;
+transition: all 0.3s ease;
+cursor: pointer;
+outline: none;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+margin-top: 1rem;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+user-select: none;
+}
+.gold-button:hover {
+transform: translateY(-2px);
+box-shadow: 0 6px 20px rgba(197, 149, 65, 0.7);
+filter: brightness(1.1);
+color: #002e08;
+}
 
-        /* --- Effetto Neve Ottimizzato --- */
-        .snow, .snow:before, .snow:after {
-            position: fixed;
-            top: -650px;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background-image: 
-                radial-gradient(4px 4px at 100px 50px, #fff , transparent), 
-                radial-gradient(6px 6px at 200px 150px, #fff, transparent), 
-                radial-gradient(3px 3px at 300px 250px, #fff, transparent), 
-                radial-gradient(4px 4px at 400px 350px, #fff, transparent), 
-                radial-gradient(6px 6px at 500px 100px, #fff, transparent), 
-                radial-gradient(3px 3px at 50px 200px, #fff, transparent), 
-                radial-gradient(4px 4px at 150px 300px, #fff, transparent), 
-                radial-gradient(6px 6px at 250px 400px, #fff, transparent), 
-                radial-gradient(3px 3px at 350px 500px, #fff, transparent);
-            background-size: 650px 650px;
-            animation: snow 10s linear infinite;
-            content: "";
-            z-index: 0;
-            opacity: 0.3;
-            pointer-events: none;
-            will-change: transform;
-            transform: translateZ(0); 
-        }
-        .snow:after { margin-left: -250px; opacity: 0.2; animation-duration: 15s; animation-direction: reverse; filter: blur(2px); }
-        .snow:before { margin-left: -350px; opacity: 0.4; animation-duration: 20s; filter: blur(1px); }
+/* =========================================
+   STILI CHRISTMAS IN JULY (NUOVA SEZIONE)
+   ========================================= */
+.cij-container {
+width: 100%;
+background: rgba(0, 30, 0, 0.3);
+border-radius: 20px;
+border: 1px solid rgba(253, 236, 163, 0.2);
+overflow: hidden;
+margin-bottom: 2rem;
+}
+.cij-hero {
+position: relative;
+padding: 3rem 2rem;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+text-align: center;
+/* Sfondo aggiornato con l'immagine richiesta */
+background: linear-gradient(to bottom, rgba(0, 46, 8, 0.6), rgba(0, 46, 8, 0.95)), url('https://i.postimg.cc/QtG155tr/image.png') center/cover;
+}
+.cij-title-main {
+font-family: 'Playwrite CU', cursive;
+font-size: clamp(2rem, 5vw, 2.8rem);
+background: var(--gold-gradient);
+-webkit-background-clip: text;
+background-clip: text;
+-webkit-text-fill-color: transparent;
+color: transparent;
+margin-bottom: 0.5rem;
+text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+/* FIX: padding e line-height per evitare il taglio sotto */
+line-height: 1.6;
+padding-bottom: 0.3em;
+padding-right: 0.1em;
+}
+.cij-subtitle {
+font-size: clamp(1.1rem, 3vw, 1.3rem);
+font-weight: 700;
+color: #fff;
+margin-bottom: 1.5rem;
+letter-spacing: 0.5px;
+}
+.cij-hero p {
+font-size: 1rem;
+line-height: 1.6;
+color: #e0e0e0;
+max-width: 600px;
+margin-bottom: 2rem;
+}
+.cij-content {
+padding: 2rem;
+}
+.cij-section-title {
+font-size: 1.4rem;
+font-weight: 700;
+color: var(--gold-light);
+margin-bottom: 1rem;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+.cij-text {
+font-size: 1.05rem;
+line-height: 1.6;
+color: #f0f0f0;
+margin-bottom: 1.5rem;
+}
+.cij-list {
+list-style: none;
+text-align: left;
+margin: 0 auto 2rem auto;
+max-width: 500px;
+}
+.cij-list li {
+margin-bottom: 1rem;
+display: flex;
+align-items: center;
+gap: 12px;
+font-size: 1.05rem;
+}
+.cij-list li i {
+color: var(--gold-light);
+font-size: 1.2rem;
+width: 20px;
+text-align: center;
+}
+/* Due colonne */
+.cij-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 20px;
+margin-bottom: 2.5rem;
+}
+.cij-card {
+background: rgba(255, 255, 255, 0.05);
+border: 1px solid rgba(255, 255, 255, 0.1);
+border-radius: 16px;
+padding: 1.5rem;
+text-align: left;
+}
+.cij-card h4 {
+font-size: 1.2rem;
+color: var(--gold-light);
+margin-bottom: 1rem;
+text-align: center;
+border-bottom: 1px solid rgba(255,255,255,0.1);
+padding-bottom: 0.5rem;
+}
+.cij-card ul {
+list-style: none;
+}
+.cij-card ul li {
+margin-bottom: 0.8rem;
+font-size: 0.95rem;
+display: flex;
+align-items: flex-start;
+gap: 10px;
+}
+.cij-card ul li i {
+color: #25D366; /* Verde spunta */
+margin-top: 3px;
+}
+.cij-card.outlet-card ul li i {
+color: var(--gold-light); /* Oro per Vinted */
+}
+/* Box Urgenza / FOMO */
+.cij-fomo {
+background: rgba(197, 149, 65, 0.15);
+border: 1px dashed var(--gold-light);
+border-radius: 12px;
+padding: 1.5rem;
+margin-bottom: 2.5rem;
+}
+.cij-fomo h4 {
+color: var(--gold-light);
+font-size: 1.2rem;
+margin-bottom: 0.5rem;
+}
+/* FAQ */
+.cij-faq {
+text-align: left;
+}
+.cij-faq details {
+background: rgba(255, 255, 255, 0.05);
+border: 1px solid rgba(255, 255, 255, 0.1);
+border-radius: 10px;
+margin-bottom: 10px;
+overflow: hidden;
+}
+.cij-faq summary {
+padding: 1rem;
+font-weight: 700;
+cursor: pointer;
+display: flex;
+justify-content: space-between;
+align-items: center;
+list-style: none; /* Rimuove freccia di default */
+}
+.cij-faq summary::-webkit-details-marker {
+display: none;
+}
+.cij-faq summary:after {
+content: '\f0d7';
+font-family: 'FontAwesome';
+color: var(--gold-light);
+transition: transform 0.3s;
+}
+.cij-faq details[open] summary:after {
+transform: rotate(180deg);
+}
+.cij-faq .faq-content {
+padding: 0 1rem 1rem 1rem;
+font-size: 0.95rem;
+line-height: 1.5;
+color: #e0e0e0;
+}
 
-        @keyframes snow {
-            to { transform: translateY(650px); }
-        }
+/* Footer mini box */
+.footer-mini-box {
+margin-top: 2rem;
+padding: 1rem;
+background: rgba(0,0,0,0.2);
+border-radius: 12px;
+font-size: 0.9rem;
+border: 1px solid rgba(255,255,255,0.05);
+}
+.footer-mini-box a {
+color: var(--gold-light);
+text-decoration: underline;
+font-weight: bold;
+}
 
-        /* --- Container Principale Ottimizzato --- */
-        .main-container {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow);
-            border-radius: 24px;
-            padding: 3rem 2rem;
-            width: 90%;
-            max-width: 800px;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-            animation: fadeIn 1s ease-out;
-            margin: 40px 0;
-            transform: translateZ(0);
-        }
+/* --- STILE RADIO POLO NORD --- */
+.radio-container {
+width: 100%;
+padding: 1.5rem;
+background: rgba(0, 0, 0, 0.2);
+border-radius: 20px;
+border: 1px solid rgba(255, 255, 255, 0.1);
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 20px;
+}
+.radio-info {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+width: 100%;
+text-align: center;
+}
+.now-playing-label {
+font-size: 0.8rem;
+text-transform: uppercase;
+letter-spacing: 2px;
+color: rgba(255, 255, 255, 0.6);
+margin-bottom: 5px;
+}
+.now-playing-title {
+font-family: 'Playwrite CU', cursive;
+font-size: 1.3rem;
+background: var(--gold-gradient);
+-webkit-background-clip: text;
+background-clip: text;
+-webkit-text-fill-color: transparent;
+color: transparent;
+padding-right: 0.3em;
+padding-bottom: 0.3em;
+line-height: 1.6;
+min-height: 3.2rem; /* Altezza fissa per evitare salti nel layout */
+}
+.radio-controls {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 20px;
+width: 100%;
+}
+.control-btn {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+background: rgba(255,255,255,0.1);
+border: 1px solid var(--gold-light);
+color: var(--gold-light);
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.2s;
+}
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .logo-img {
-            width: 180px;
-            height: auto;
-            margin-bottom: 1.5rem;
-            filter: drop-shadow(0 0 15px rgba(255,255,255,0.4));
-            transition: transform 0.3s ease;
-            will-change: transform;
-        }
-
-        .logo-img:hover {
-            transform: scale(1.05);
-        }
-
-        h1 {
-            font-weight: 700;
-            font-size: clamp(1.8rem, 4vw, 2.8rem);
-            margin-bottom: 2rem;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            letter-spacing: -1px;
-        }
-
-        /* --- Countdown Grid System --- */
-        .countdown-wrapper {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-bottom: 2.5rem;
-            width: 100%;
-        }
-
-        .time-box {
-            background: rgba(0, 30, 0, 0.4);
-            border: 1px solid rgba(253, 236, 163, 0.3);
-            border-radius: 16px;
-            padding: 15px 5px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease, border-color 0.3s;
-        }
-
-        .time-box:hover {
-            transform: translateY(-5px);
-            border-color: var(--gold-light);
-        }
-
-        .number {
-            font-size: clamp(1.8rem, 5vw, 3.5rem);
-            font-weight: 700;
-            color: #fff;
-            line-height: 1.1;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .label {
-            font-size: clamp(0.7rem, 1.5vw, 0.9rem);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 5px;
-            font-weight: 600;
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-            display: inline-block;
-            padding-right: 0.3em;
-            padding-bottom: 0.2em;
-            line-height: 1.4;
-        }
-
-        /* --- Footer & Social --- */
-        .footer-text {
-            font-family: 'Playwrite CU', cursive;
-            font-size: clamp(1.2rem, 3vw, 1.6rem);
-            margin-bottom: 1.5rem;
-            color: #eee;
-            line-height: 1.8;
-            padding-bottom: 0.2em;
-            display: inline-block;
-        }
-
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 10px;
-            margin-bottom: 2.5rem;
-        }
-
-        .social-btn {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            text-decoration: none;
-            color: white;
-            font-size: 1.5rem;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            transform: translateZ(0);
-        }
-
-        .social-btn:hover {
-            background: white;
-            transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-        }
-
-        .social-btn:hover .fa-facebook-f { color: #1877F2; }
-        .social-btn:hover .fa-instagram { color: #E4405F; }
-        .social-btn:hover .fa-tiktok { color: #000000; }
-        .social-btn:hover .fa-whatsapp { color: #25D366; }
-        .social-btn:hover .fa-youtube { color: #FF0000; }
-
-        /* --- Messaggio Speciale --- */
-        .christmas-message {
-            display: none;
-            font-family: 'Playwrite CU', cursive;
-            font-size: clamp(2rem, 6vw, 3.5rem);
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-            animation: textGlow 2s infinite alternate;
-            padding: 20px 0;
-            padding-right: 0.3em; 
-            padding-bottom: 0.2em;
-            line-height: 1.6;
-        }
-
-        @keyframes textGlow {
-            from { text-shadow: 0 0 10px rgba(253, 236, 163, 0.3); }
-            to { text-shadow: 0 0 20px rgba(253, 236, 163, 0.8), 0 0 30px #ff0000; }
-        }
-
-        /* --- STILE SEZIONI (Curiosità & Radio) --- */
-        .section-separator {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .section-heading {
-            font-family: 'Playwrite CU', cursive;
-            /* Modifica per mobile: clamp leggermente ridotto nel minimo e nowrap */
-            font-size: clamp(1.3rem, 4vw, 1.8rem); 
-            margin-bottom: 1.5rem;
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding-right: 0.3em; 
-            padding-bottom: 0.3em;
-            line-height: 1.6;
-            
-            /* MODIFICA RICHIESTA: Impedisce al titolo di andare a capo */
-            white-space: nowrap; 
-        }
-
-        .section-heading i {
-            background: inherit;
-            -webkit-background-clip: inherit;
-            background-clip: inherit;
-            -webkit-text-fill-color: inherit;
-        }
-
-        .fact-text {
-            font-size: 1.1rem;
-            font-style: italic;
-            color: #f0f0f0;
-            min-height: 100px; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 1rem;
-            line-height: 1.6;
-            transition: opacity 0.3s ease-in-out;
-            will-change: opacity;
-            width: 100%;
-        }
-
-        .gold-button {
-            background: var(--gold-gradient);
-            color: #002e08;
-            padding: 0.75rem 1.5rem;
-            border-radius: 9999px;
-            font-family: 'Josefin Sans', sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
-            border: 2px solid var(--gold-dark);
-            box-shadow: 0 4px 15px rgba(197, 149, 65, 0.4);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            outline: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            user-select: none;
-        }
-
-        .gold-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(197, 149, 65, 0.7);
-            filter: brightness(1.1);
-        }
-
-        /* --- STILE RADIO POLO NORD --- */
-        .radio-container {
-            width: 100%;
-            padding: 1.5rem;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .radio-info {
-            display: flex;
-            flex-direction: column; 
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            text-align: center;
-        }
-
-        .now-playing-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 5px;
-        }
-
-        .now-playing-title {
-            font-family: 'Playwrite CU', cursive;
-            font-size: 1.3rem;
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-            padding-right: 0.3em;
-            padding-bottom: 0.3em;
-            line-height: 1.6;
-            min-height: 3.2rem; /* Altezza fissa per evitare salti nel layout */
-        }
-
-        .radio-controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            width: 100%;
-        }
-
-        .control-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid var(--gold-light);
-            color: var(--gold-light);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-        
-        .control-btn:hover {
-            background: var(--gold-light);
-            color: #002e08;
-        }
-
-        .play-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--gold-gradient);
-            border: none;
-            color: #002e08;
-            font-size: 1.4rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s;
-            box-shadow: 0 4px 10px rgba(197, 149, 65, 0.3);
-        }
-
-        .play-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .volume-control {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-left: 10px;
-        }
-
-        .volume-slider {
-            -webkit-appearance: none;
-            width: 80px;
-            height: 4px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 2px;
-            outline: none;
-        }
-
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 12px;
-            height: 12px;
-            background: var(--gold-light);
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        /* --- Media Queries --- */
-        @media (max-width: 600px) {
-            .main-container {
-                padding: 2rem 1.5rem;
-                width: 95%;
-                margin: 20px 0;
-            }
-            .countdown-wrapper { gap: 8px; }
-            .time-box { border-radius: 12px; padding: 10px 2px; }
-            .social-btn { width: 45px; height: 45px; font-size: 1.3rem; }
-        }
-
-        @media (max-width: 1024px) {
-            .volume-control {
-                display: none !important;
-            }
-        }
-    </style>
+.control-btn:hover {
+background: var(--gold-light);
+color: #002e08;
+}
+.play-btn {
+width: 60px;
+height: 60px;
+border-radius: 50%;
+background: var(--gold-gradient);
+border: none;
+color: #002e08;
+font-size: 1.4rem;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: transform 0.2s;
+box-shadow: 0 4px 10px rgba(197, 149, 65, 0.3);
+}
+.play-btn:hover {
+transform: scale(1.1);
+}
+.volume-control {
+display: flex;
+align-items: center;
+gap: 10px;
+margin-left: 10px;
+}
+.volume-slider {
+-webkit-appearance: none;
+width: 80px;
+height: 4px;
+background: rgba(255,255,255,0.2);
+border-radius: 2px;
+outline: none;
+}
+.volume-slider::-webkit-slider-thumb {
+-webkit-appearance: none;
+width: 12px;
+height: 12px;
+background: var(--gold-light);
+border-radius: 50%;
+cursor: pointer;
+}
+/* --- Media Queries --- */
+@media (max-width: 600px) {
+.main-container {
+padding: 2rem 1.5rem;
+width: 95%;
+margin: 20px 0;
+}
+.countdown-wrapper { gap: 8px; }
+.time-box { border-radius: 12px; padding: 10px 2px; }
+.social-btn { width: 45px; height: 45px; font-size: 1.3rem; }
+.cij-grid { grid-template-columns: 1fr; gap: 15px; }
+.cij-hero { padding: 2rem 1rem; }
+}
+@media (max-width: 1024px) {
+.volume-control {
+display: none !important;
+}
+}
+</style>
 </head>
 <body>
 
-    <div class="snow"></div>
+<!-- Banner Top Extra -->
+<div class="top-banner">
+<a href="https://www.vinted.it/member/222558224" target="_blank">🎄 Outlet Estivo attivo – Scopri le occasioni su Vinted ✨</a>
+</div>
 
-    <div class="main-container">
-        <!-- Logo -->
-        <img src="https://i.postimg.cc/6p5vdWTN/Progetto-senza-titolo-8.png" alt="Christmas Wonder Shop Logo" class="logo-img">
-        
-        <!-- Titolo Dinamico -->
-        <h1 id="main-title">Caricamento...</h1>
-        
-        <!-- Messaggio Festivo -->
-        <div id="end-message" class="christmas-message"></div>
-        
-        <!-- Countdown -->
-        <div class="countdown-wrapper" id="countdown-container">
-            <div class="time-box">
-                <div id="days" class="number">00</div>
-                <div class="label">Giorni</div>
-            </div>
-            <div class="time-box">
-                <div id="hours" class="number">00</div>
-                <div class="label">Ore</div>
-            </div>
-            <div class="time-box">
-                <div id="minutes" class="number">00</div>
-                <div class="label">Min</div>
-            </div>
-            <div class="time-box">
-                <div id="seconds" class="number">00</div>
-                <div class="label">Sec</div>
-            </div>
-        </div>
+<div class="snow"></div>
+<div class="main-container">
+<!-- Logo -->
+<img src="https://i.postimg.cc/6p5vdWTN/Progetto-senza-titolo-8.png" alt="Christmas Wonder Shop Logo" class="logo-img">
+
+<!-- Titolo Dinamico -->
+<h1 id="main-title">Caricamento...</h1>
+
+<!-- Messaggio Festivo -->
+<div id="end-message" class="christmas-message"></div>
+
+<!-- Countdown -->
+<div class="countdown-wrapper" id="countdown-container">
+<div class="time-box">
+<div id="days" class="number">00</div>
+<div class="label">Giorni</div>
+</div>
+<div class="time-box">
+<div id="hours" class="number">00</div>
+<div class="label">Ore</div>
+</div>
+<div class="time-box">
+<div id="minutes" class="number">00</div>
+<div class="label">Min</div>
+</div>
+<div class="time-box">
+<div id="seconds" class="number">00</div>
+<div class="label">Sec</div>
+</div>
+</div>
+
+
+<!-- ==========================================
+     NUOVA SEZIONE: CHRISTMAS IN JULY (VINTED)
+     ========================================== -->
+<section id="christmas-in-july" class="section-separator" style="margin-top: 0; padding-top: 1rem; border-top: none;">
     
-        <div class="footer-text">Continua a seguirci!</div>
-    
-        <!-- Icone Social -->
-        <div class="social-icons">
-            <a href="https://www.facebook.com/ChristmasWonderShop.official/" target="_blank" class="social-btn" aria-label="Facebook">
-                <i class="fa-brands fa-facebook-f"></i>
-            </a>
-            <a href="https://www.instagram.com/christmaswondershop/" target="_blank" class="social-btn" aria-label="Instagram">
-                <i class="fa-brands fa-instagram"></i>
-            </a>
-            <a href="https://www.tiktok.com/@christmaswondershop" target="_blank" class="social-btn" aria-label="TikTok">
-                <i class="fa-brands fa-tiktok"></i>
-            </a>
-            <a href="http://wa.me/390316870231" target="_blank" class="social-btn" aria-label="WhatsApp">
-                <i class="fa-brands fa-whatsapp"></i>
-            </a>
-            <a href="https://www.youtube.com/@christmaswondershop" target="_blank" class="social-btn" aria-label="YouTube">
-                <i class="fa-brands fa-youtube"></i>
+    <div class="cij-container">
+        <!-- 1. HERO SECTION -->
+        <div class="cij-hero">
+            <h2 class="cij-title-main">🎄 Christmas in July</h2>
+            <div class="cij-subtitle">Il nostro deposito natalizio apre le porte… in piena estate.</div>
+            <p>Prima dell’arrivo della nuova collezione, abbiamo deciso di liberare il magazzino. Per poche settimane puoi trovare fondi di magazzino, fine serie e articoli con confezione danneggiata sul nostro profilo ufficiale Vinted.</p>
+            <a href="https://www.vinted.it/member/222558224" target="_blank" class="gold-button">
+                <i class="fa-solid fa-store" style="margin-right: 8px;"></i> Scopri l'Outlet su Vinted
             </a>
         </div>
 
-        <!-- SEZIONE: Curiosità Magiche -->
-        <section id="fun-facts" class="section-separator">
-            <h2 class="section-heading">
-                <i class="fa-solid fa-star"></i>
-                Curiosità Magiche
-            </h2>
-            <p id="current-fact" class="fact-text">
-                Caricamento curiosità...
-            </p>
-            <button id="next-fact-btn" class="gold-button">
-                <i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 8px;"></i> Prossima Curiosità
-            </button>
-        </section>
-
-        <!-- SEZIONE: Radio del Polo Nord -->
-        <section id="north-pole-radio" class="section-separator">
-            <h2 class="section-heading">
-                <i class="fa-solid fa-radio"></i>
-                Radio Polo Nord
-            </h2>
+        <div class="cij-content">
+            <!-- 2. SPIEGAZIONE -->
+            <h3 class="cij-section-title">Perché vendiamo su Vinted?</h3>
+            <p class="cij-text">Durante l’estate svuotiamo il nostro deposito per fare spazio alle nuove collezioni natalizie. Alcuni articoli delle stagioni precedenti o con confezione leggermente imperfetta vengono messi a disposizione a condizioni speciali sul nostro profilo ufficiale Vinted.</p>
+            <p class="cij-text" style="margin-bottom: 2rem;"><strong>La qualità del prodotto resta garantita:</strong> cambiano solo la confezione o la disponibilità limitata.</p>
             
-            <div class="radio-container">
-                <div class="radio-info">
-                    <div class="now-playing-label">ORA IN ONDA:</div>
-                    <div class="now-playing-title" id="track-title">Caricamento...</div>
+            <ul class="cij-list">
+                <li><i class="fa-solid fa-box-open"></i> Fine serie e ultime disponibilità</li>
+                <li><i class="fa-solid fa-box"></i> Confezione esterna leggermente danneggiata</li>
+                <li><i class="fa-solid fa-clock-rotate-left"></i> Occasioni fuori stagione</li>
+                <li><i class="fa-solid fa-hourglass-half"></i> Quantità estremamente limitate</li>
+            </ul>
+
+            <!-- 3. DIFFERENZIAZIONE -->
+            <div class="cij-grid">
+                <div class="cij-card">
+                    <h4>Sul sito ufficiale trovi:</h4>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> Nuove collezioni</li>
+                        <li><i class="fa-solid fa-check"></i> Edizioni limitate</li>
+                        <li><i class="fa-solid fa-check"></i> Articoli perfetti da regalo</li>
+                        <li><i class="fa-solid fa-check"></i> Packaging impeccabile</li>
+                        <li><i class="fa-solid fa-check"></i> Assistenza clienti dedicata</li>
+                    </ul>
                 </div>
-                
-                <div class="radio-controls">
-                    <!-- MODIFICA: Pulsante Indietro invece di Shuffle -->
-                    <button class="control-btn" id="prev-btn" aria-label="Brano Precedente">
-                        <i class="fa-solid fa-backward-step"></i>
-                    </button>
-
-                    <button class="play-btn" id="audio-toggle" aria-label="Play/Pause">
-                        <i class="fa-solid fa-play" id="play-icon"></i>
-                    </button>
-
-                    <button class="control-btn" id="next-btn" aria-label="Brano Successivo">
-                        <i class="fa-solid fa-forward-step"></i>
-                    </button>
-                    
-                    <div class="volume-control">
-                        <i class="fa-solid fa-volume-low" style="color: var(--gold-light); font-size: 0.8rem;"></i>
-                        <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
-                        <i class="fa-solid fa-volume-high" style="color: var(--gold-light); font-size: 0.8rem;"></i>
-                    </div>
+                <div class="cij-card outlet-card">
+                    <h4>Sull'Outlet Vinted trovi:</h4>
+                    <ul>
+                        <li><i class="fa-solid fa-tag"></i> Fondo di magazzino</li>
+                        <li><i class="fa-solid fa-tag"></i> Confezioni danneggiate</li>
+                        <li><i class="fa-solid fa-tag"></i> Occasioni fuori stagione</li>
+                        <li><i class="fa-solid fa-tag"></i> Pezzi unici rimasti</li>
+                    </ul>
                 </div>
-
-                <audio id="bg-music" playsinline preload="none">
-                    Il tuo browser non supporta l'audio.
-                </audio>
             </div>
-        </section>
 
+            <!-- 4. FOMO -->
+            <div class="cij-fomo">
+                <h4>Solo per poche settimane</h4>
+                <p>Christmas in July è un’apertura straordinaria e temporanea del nostro deposito. Una volta esauriti gli articoli disponibili, l’outlet chiuderà fino al prossimo anno.</p>
+            </div>
+
+            <!-- 5. FAQ -->
+            <h3 class="cij-section-title">Domande Frequenti</h3>
+            <div class="cij-faq">
+                <details>
+                    <summary>Gli articoli su Vinted sono originali?</summary>
+                    <div class="faq-content">Assolutamente sì, provengono direttamente dal nostro magazzino ufficiale Christmas Wonder Shop.</div>
+                </details>
+                <details>
+                    <summary>Le spedizioni sono gestite da voi?</summary>
+                    <div class="faq-content">Sì, prepariamo e spediamo i pacchi sempre dal nostro deposito, garantendo la cura di sempre.</div>
+                </details>
+                <details>
+                    <summary>Posso usare i codici sconto del sito su Vinted?</summary>
+                    <div class="faq-content">No, le piattaforme sono separate e i codici sconto del sito ufficiale non sono validi per l'outlet. <em>Tuttavia, all'interno dei pacchi Vinted potresti trovare una piccola sorpresa per i tuoi acquisti futuri sul sito ufficiale!</em></div>
+                </details>
+            </div>
+
+        </div>
     </div>
+</section>
+<!-- ==========================================
+     FINE SEZIONE CHRISTMAS IN JULY
+     ========================================== -->
 
-    <script>
-        // --- LOGICA COUNTDOWN ---
-        const titleElement = document.getElementById('main-title');
-        const countdownContainer = document.getElementById('countdown-container');
-        const endMessage = document.getElementById('end-message');
-        const daysElement = document.getElementById('days');
-        const hoursElement = document.getElementById('hours');
-        const minutesElement = document.getElementById('minutes');
-        const secondsElement = document.getElementById('seconds');
 
-        const formatNumber = (num) => num < 10 ? '0' + num : num;
+<!-- SEZIONE: Curiosità Magiche -->
+<section id="fun-facts" class="section-separator">
+<h2 class="section-heading">
+<i class="fa-solid fa-star"></i>
+Curiosità Magiche
+</h2>
+<p id="current-fact" class="fact-text">
+Caricamento curiosità...
+</p>
+<button id="next-fact-btn" class="gold-button">
+<i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 8px;"></i> Prossima Curiosità
+</button>
+</section>
+<!-- SEZIONE: Radio del Polo Nord -->
+<section id="north-pole-radio" class="section-separator">
+<h2 class="section-heading">
+<i class="fa-solid fa-radio"></i>
+Radio Polo Nord
+</h2>
 
-        const updateUI = (title, gap, msg, isCountdown = true) => {
-            titleElement.innerText = title;
-            if (endMessage) endMessage.innerText = msg || '';
+<div class="radio-container">
+<div class="radio-info">
+<div class="now-playing-label">ORA IN ONDA:</div>
+<div class="now-playing-title" id="track-title">Caricamento...</div>
+</div>
 
-            if (isCountdown) {
-                titleElement.style.display = 'block';
-                countdownContainer.style.display = 'grid';
-                endMessage.style.display = 'none';
+<div class="radio-controls">
+<button class="control-btn" id="prev-btn" aria-label="Brano Precedente">
+<i class="fa-solid fa-backward-step"></i>
+</button>
+<button class="play-btn" id="audio-toggle" aria-label="Play/Pause">
+<i class="fa-solid fa-play" id="play-icon"></i>
+</button>
+<button class="control-btn" id="next-btn" aria-label="Brano Successivo">
+<i class="fa-solid fa-forward-step"></i>
+</button>
 
-                const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
-                const d = Math.floor(gap / day);
-                const h = Math.floor((gap % day) / hour);
-                const m = Math.floor((gap % hour) / minute);
-                const s = Math.floor((gap % minute) / second);
+<div class="volume-control">
+<i class="fa-solid fa-volume-low" style="color: var(--gold-light); font-size: 0.8rem;"></i>
+<input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
+<i class="fa-solid fa-volume-high" style="color: var(--gold-light); font-size: 0.8rem;"></i>
+</div>
+</div>
+<audio id="bg-music" playsinline preload="none">
+Il tuo browser non supporta l'audio.
+</audio>
+</div>
 
-                daysElement.innerText = formatNumber(d);
-                hoursElement.innerText = formatNumber(h);
-                minutesElement.innerText = formatNumber(m);
-                secondsElement.innerText = formatNumber(s);
-            } else {
-                titleElement.style.display = 'none';
-                countdownContainer.style.display = 'none';
-                endMessage.style.display = 'block';
-            }
-        }
+<!-- Extra Box Footer richiesto -->
+<div class="footer-mini-box">
+Cerchi occasioni fuori stagione? <br>
+<a href="https://www.vinted.it/member/222558224" target="_blank">Visita il nostro outlet ufficiale su Vinted.</a>
+</div>
 
-        const countdown = () => {
-            const now = new Date();
-            const currentYear = now.getFullYear();
-            const christmasDate = new Date(`December 25, ${currentYear} 00:00:00`).getTime();
-            const endOfChristmas = new Date(`December 26, ${currentYear} 23:59:59`).getTime();
-            let returnDateYear = currentYear;
-            if (now.getMonth() > 9) { returnDateYear = currentYear + 1; }
-            const returnDate = new Date(`October 01, ${returnDateYear} 00:00:00`).getTime();
-            const nowTime = now.getTime();
+</section>
 
-            if (nowTime >= christmasDate && nowTime <= endOfChristmas) {
-                updateUI('', 0, 'BUON NATALE!', false);
-            } else if (nowTime < returnDate && now.getMonth() < 9) {
-                const gap = returnDate - nowTime;
-                updateUI('Torniamo tra:', gap, null, true);
-            } else if (nowTime > endOfChristmas) {
-                const nextReturn = new Date(`October 01, ${currentYear + 1} 00:00:00`).getTime();
-                const gap = nextReturn - nowTime;
-                updateUI('Torniamo tra:', gap, null, true);
-            } else {
-                let targetXmas = christmasDate;
-                if (nowTime > christmasDate) targetXmas = new Date(`December 25, ${currentYear + 1} 00:00:00`).getTime();
-                const gap = targetXmas - nowTime;
-                updateUI('Natale è tra:', gap, null, true);
-            }
-        };
+<!-- FOOTER CON SOCIAL -->
+<section class="section-separator" style="margin-bottom: 1rem;">
+    <div class="footer-text">Continua a seguirci!</div>
+    <div class="social-icons" style="margin-bottom: 0;">
+        <a href="https://www.facebook.com/ChristmasWonderShop.official/" target="_blank" class="social-btn" aria-label="Facebook">
+        <i class="fa-brands fa-facebook-f"></i>
+        </a>
+        <a href="https://www.instagram.com/christmaswondershop/" target="_blank" class="social-btn" aria-label="Instagram">
+        <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://www.tiktok.com/@christmaswondershop" target="_blank" class="social-btn" aria-label="TikTok">
+        <i class="fa-brands fa-tiktok"></i>
+        </a>
+        <a href="http://wa.me/390316870231" target="_blank" class="social-btn" aria-label="WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        <a href="https://www.youtube.com/@christmaswondershop" target="_blank" class="social-btn" aria-label="YouTube">
+        <i class="fa-brands fa-youtube"></i>
+        </a>
+    </div>
+</section>
 
-        setInterval(countdown, 1000);
-        countdown();
+</div>
+<script>
+// --- LOGICA COUNTDOWN ---
+const titleElement = document.getElementById('main-title');
+const countdownContainer = document.getElementById('countdown-container');
+const endMessage = document.getElementById('end-message');
+const daysElement = document.getElementById('days');
+const hoursElement = document.getElementById('hours');
+const minutesElement = document.getElementById('minutes');
+const secondsElement = document.getElementById('seconds');
+const formatNumber = (num) => num < 10 ? '0' + num : num;
+const updateUI = (title, gap, msg, isCountdown = true) => {
+titleElement.innerText = title;
+if (endMessage) endMessage.innerText = msg || '';
+if (isCountdown) {
+titleElement.style.display = 'block';
+countdownContainer.style.display = 'grid';
+endMessage.style.display = 'none';
+const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
+const d = Math.floor(gap / day);
+const h = Math.floor((gap % day) / hour);
+const m = Math.floor((gap % hour) / minute);
+const s = Math.floor((gap % minute) / second);
+daysElement.innerText = formatNumber(d);
+hoursElement.innerText = formatNumber(h);
+minutesElement.innerText = formatNumber(m);
+secondsElement.innerText = formatNumber(s);
+} else {
+titleElement.style.display = 'none';
+countdownContainer.style.display = 'none';
+endMessage.style.display = 'block';
+}
+}
+const countdown = () => {
+const now = new Date();
+const currentYear = now.getFullYear();
+const christmasDate = new Date(`December 25, ${currentYear} 00:00:00`).getTime();
+const endOfChristmas = new Date(`December 26, ${currentYear} 23:59:59`).getTime();
+let returnDateYear = currentYear;
+if (now.getMonth() > 9) { returnDateYear = currentYear + 1; }
+const returnDate = new Date(`October 01, ${returnDateYear} 00:00:00`).getTime();
+const nowTime = now.getTime();
+if (nowTime >= christmasDate && nowTime <= endOfChristmas) {
+updateUI('', 0, 'BUON NATALE!', false);
+} else if (nowTime < returnDate && now.getMonth() < 9) {
+const gap = returnDate - nowTime;
+updateUI('Torniamo tra:', gap, null, true);
+} else if (nowTime > endOfChristmas) {
+const nextReturn = new Date(`October 01, ${currentYear + 1} 00:00:00`).getTime();
+const gap = nextReturn - nowTime;
+updateUI('Torniamo tra:', gap, null, true);
+} else {
+let targetXmas = christmasDate;
+if (nowTime > christmasDate) targetXmas = new Date(`December 25, ${currentYear + 1} 00:00:00`).getTime();
+const gap = targetXmas - nowTime;
+updateUI('Natale è tra:', gap, null, true);
+}
+};
+setInterval(countdown, 1000);
+countdown();
+// --- LOGICA CURIOSITA' ---
+const funFacts = [
+"Sapevi che Babbo Natale è noto come 'Sinterklaas' nei Paesi Bassi?",
+"Il canto di Natale più registrato è 'Silent Night'.",
+"L'albero di Natale è stato decorato per la prima volta in Germania.",
+"Le renne di Babbo Natale sono 9, e Rudolph è la più famosa.",
+"Il periodo natalizio è in realtà di 12 giorni, che terminano con l'Epifania.",
+"Tradizionalmente, gli addobbi dorati e argentati simboleggiano la luna e il sole.",
+"Il primo presepe della storia fu realizzato da San Francesco d'Assisi nel 1223.",
+"In Islanda, i bambini ricevono visite da 13 diversi 'Folletti di Natale'.",
+"Le canzoni di Natale venivano cantate originariamente in tutte le stagioni.",
+"In Giappone, è tradizione cenare da KFC per il giorno di Natale!",
+"La statua della Libertà è stata tecnicamente il più grande regalo di Natale della storia.",
+"I bastoncini di zucchero rossi e bianchi furono inventati per tenere i bambini tranquilli in chiesa.",
+"Jingle Bells fu originariamente scritta per la festa del Ringraziamento, non per il Natale.",
+"In Polonia, i ragni sono considerati simboli di fortuna natalizia e si trovano spesso sugli alberi.",
+"L'albero di Natale del Rockefeller Center a New York è illuminato da oltre 50.000 luci LED.",
+"In Svezia, quasi tutta la nazione guarda i cartoni di Paperino il pomeriggio della vigilia di Natale."
+];
+let currentFactIndex = 0;
+let isFactAnimating = false;
+const currentFactElement = document.getElementById('current-fact');
+const nextFactButton = document.getElementById('next-fact-btn');
+const showNextFact = () => {
+if (isFactAnimating) return;
+isFactAnimating = true;
+currentFactElement.style.opacity = 0;
+setTimeout(() => {
+if (currentFactIndex >= funFacts.length) currentFactIndex = 0;
+currentFactElement.innerText = funFacts[currentFactIndex];
+currentFactIndex++;
+requestAnimationFrame(() => {
+currentFactElement.style.opacity = 1;
+setTimeout(() => isFactAnimating = false, 300);
+});
+}, 300);
+};
+nextFactButton.addEventListener('click', showNextFact);
+currentFactElement.innerText = funFacts[0];
+currentFactIndex = 1;
+// --- LOGICA RADIO POLO NORD ---
 
-        // --- LOGICA CURIOSITA' ---
-        const funFacts = [
-            "Sapevi che Babbo Natale è noto come 'Sinterklaas' nei Paesi Bassi?",
-            "Il canto di Natale più registrato è 'Silent Night'.",
-            "L'albero di Natale è stato decorato per la prima volta in Germania.",
-            "Le renne di Babbo Natale sono 9, e Rudolph è la più famosa.",
-            "Il periodo natalizio è in realtà di 12 giorni, che terminano con l'Epifania.",
-            "Tradizionalmente, gli addobbi dorati e argentati simboleggiano la luna e il sole.",
-            "Il primo presepe della storia fu realizzato da San Francesco d'Assisi nel 1223.",
-            "In Islanda, i bambini ricevono visite da 13 diversi 'Folletti di Natale'.",
-            "Le canzoni di Natale venivano cantate originariamente in tutte le stagioni.",
-            "In Giappone, è tradizione cenare da KFC per il giorno di Natale!",
-            "La statua della Libertà è stata tecnicamente il più grande regalo di Natale della storia.",
-            "I bastoncini di zucchero rossi e bianchi furono inventati per tenere i bambini tranquilli in chiesa.",
-            "Jingle Bells fu originariamente scritta per la festa del Ringraziamento, non per il Natale.",
-            "In Polonia, i ragni sono considerati simboli di fortuna natalizia e si trovano spesso sugli alberi.",
-            "L'albero di Natale del Rockefeller Center a New York è illuminato da oltre 50.000 luci LED.",
-            "In Svezia, quasi tutta la nazione guarda i cartoni di Paperino il pomeriggio della vigilia di Natale."
-        ];
+// Funzione per convertire i link Dropbox per iOS/Streaming diretto
+const formatDropboxUrl = (url) => {
+return url.replace('www.dropbox.com', 'dl.dropboxusercontent.com').replace('?dl=1', '');
+};
+const playlist = [
+{
+title: "Conciati per le feste",
+src: "https://www.dropbox.com/scl/fi/gjr0fhcpmizhvbqoggyq0/mixkit-holidays-2-691.mp3?rlkey=n9n69jhy0emhnrdwp9fagg0j8&st=vq2hs319&dl=1"
+},
+{
+title: "Danza della fata confetto",
+src: "https://www.dropbox.com/scl/fi/s7b0wywdcxs7o77relil3/Dance-of-the-Sugar-Plum-Fairies.mp3?rlkey=z2sq7fm5mjyfybufrwbliwp4u&st=49kndceg&dl=1"
+},
+{
+title: "Jingle Bells",
+src: "https://www.dropbox.com/scl/fi/8kxfeh46y6xnm442tylqw/Jingle-Bells-7-Kevin-MacLeod-No-Copyright-Music.mp3?rlkey=0q9iw3zz2ih57eq1mpg16pwhn&st=c6ruclsa&dl=1"
+},
+{
+title: "We Wish You a Merry Christmas",
+src: "https://www.dropbox.com/scl/fi/dn7vw1bj89bkzpczrslzg/We-Wish-you-a-Merry-Christmas.mp3?rlkey=f5xg1wfoj9s2qx3ytfuk6qhln&st=1plepdnx&dl=1"
+},
+{
+title: "I 12 giorni di Natale",
+src: "https://www.dropbox.com/scl/fi/rivm35d3pthsgubu3xpp7/12-Days-of-Christmas-Instrumental.mp3?rlkey=a63ec85sa6ihyvktnwb5v9er0&st=562bihd3&dl=1"
+},
+{
+title: "Gioia nel mondo",
+src: "https://www.dropbox.com/scl/fi/nzdksa6xushqvji952nn7/Joy-to-the-World-Instrumental.mp3?rlkey=lrcuk4wb2hvu625120ofvz5w3&st=et8ocs6b&dl=1"
+},
+{
+title: "Gloria in excelsis Deo",
+src: "https://www.dropbox.com/scl/fi/soy7tvcy7ormynnavnvxy/WhatsApp-Audio-2025-11-16-at-22.21.07.mp3?rlkey=u5kd2euunuvfx4x23fv73mmgh&st=lsnpxxc2&dl=1"
+}
+];
+let currentTrackIndex = 0;
+let isPlaying = false;
+const audio = document.getElementById('bg-music');
+const audioToggle = document.getElementById('audio-toggle');
+const playIcon = document.getElementById('play-icon');
+const volumeSlider = document.getElementById('volume-slider');
+const trackTitle = document.getElementById('track-title');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
 
-        let currentFactIndex = 0;
-        let isFactAnimating = false;
-        const currentFactElement = document.getElementById('current-fact');
-        const nextFactButton = document.getElementById('next-fact-btn');
+const initPlayer = () => {
+trackTitle.innerText = playlist[currentTrackIndex].title;
+audio.src = formatDropboxUrl(playlist[currentTrackIndex].src);
+audio.load();
+};
 
-        const showNextFact = () => {
-            if (isFactAnimating) return;
-            isFactAnimating = true;
-            currentFactElement.style.opacity = 0;
-            setTimeout(() => {
-                if (currentFactIndex >= funFacts.length) currentFactIndex = 0;
-                currentFactElement.innerText = funFacts[currentFactIndex];
-                currentFactIndex++;
-                requestAnimationFrame(() => {
-                    currentFactElement.style.opacity = 1;
-                    setTimeout(() => isFactAnimating = false, 300);
-                });
-            }, 300);
-        };
-
-        nextFactButton.addEventListener('click', showNextFact);
-        currentFactElement.innerText = funFacts[0];
-        currentFactIndex = 1;
-
-        // --- LOGICA RADIO POLO NORD ---
-        
-        // Funzione per convertire i link Dropbox per iOS/Streaming diretto
-        // Sostituisce www.dropbox.com con dl.dropboxusercontent.com
-        const formatDropboxUrl = (url) => {
-            return url.replace('www.dropbox.com', 'dl.dropboxusercontent.com').replace('?dl=1', '');
-        };
-
-        const playlist = [
-            {
-                title: "Conciati per le feste",
-                src: "https://www.dropbox.com/scl/fi/gjr0fhcpmizhvbqoggyq0/mixkit-holidays-2-691.mp3?rlkey=n9n69jhy0emhnrdwp9fagg0j8&st=vq2hs319&dl=1"
-            },
-            {
-                title: "Danza della fata confetto",
-                src: "https://www.dropbox.com/scl/fi/s7b0wywdcxs7o77relil3/Dance-of-the-Sugar-Plum-Fairies.mp3?rlkey=z2sq7fm5mjyfybufrwbliwp4u&st=49kndceg&dl=1"
-            },
-            {
-                title: "Jingle Bells",
-                src: "https://www.dropbox.com/scl/fi/8kxfeh46y6xnm442tylqw/Jingle-Bells-7-Kevin-MacLeod-No-Copyright-Music.mp3?rlkey=0q9iw3zz2ih57eq1mpg16pwhn&st=c6ruclsa&dl=1"
-            },
-            {
-                title: "We Wish You a Merry Christmas",
-                src: "https://www.dropbox.com/scl/fi/dn7vw1bj89bkzpczrslzg/We-Wish-you-a-Merry-Christmas.mp3?rlkey=f5xg1wfoj9s2qx3ytfuk6qhln&st=1plepdnx&dl=1"
-            },
-            {
-                title: "I 12 giorni di Natale",
-                src: "https://www.dropbox.com/scl/fi/rivm35d3pthsgubu3xpp7/12-Days-of-Christmas-Instrumental.mp3?rlkey=a63ec85sa6ihyvktnwb5v9er0&st=562bihd3&dl=1"
-            },
-            {
-                title: "Gioia nel mondo",
-                src: "https://www.dropbox.com/scl/fi/nzdksa6xushqvji952nn7/Joy-to-the-World-Instrumental.mp3?rlkey=lrcuk4wb2hvu625120ofvz5w3&st=et8ocs6b&dl=1"
-            },
-            {
-                title: "Gloria in excelsis Deo",
-                src: "https://www.dropbox.com/scl/fi/soy7tvcy7ormynnavnvxy/WhatsApp-Audio-2025-11-16-at-22.21.07.mp3?rlkey=u5kd2euunuvfx4x23fv73mmgh&st=lsnpxxc2&dl=1"
-            }
-        ];
-
-        let currentTrackIndex = 0;
-        let isPlaying = false;
-
-        const audio = document.getElementById('bg-music');
-        const audioToggle = document.getElementById('audio-toggle');
-        const playIcon = document.getElementById('play-icon');
-        const volumeSlider = document.getElementById('volume-slider');
-        const trackTitle = document.getElementById('track-title');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-
-        // Caricamento iniziale (senza play automatico)
-        const initPlayer = () => {
-            trackTitle.innerText = playlist[currentTrackIndex].title;
-            // Precarichiamo l'URL formattato correttamente per iOS
-            audio.src = formatDropboxUrl(playlist[currentTrackIndex].src);
-            audio.load();
-        };
-
-        // Funzione Play/Pause sicura per iOS
-        const togglePlay = () => {
-            if (audio.paused) {
-                const playPromise = audio.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        isPlaying = true;
-                        playIcon.classList.remove('fa-play');
-                        playIcon.classList.add('fa-pause');
-                    }).catch(error => {
-                        console.error("Errore riproduzione (iOS policy o rete):", error);
-                        // Su iOS, se fallisce, a volte bisogna ricaricare e riprovare
-                        isPlaying = false;
-                        playIcon.classList.remove('fa-pause');
-                        playIcon.classList.add('fa-play');
-                    });
-                }
-            } else {
-                audio.pause();
-                isPlaying = false;
-                playIcon.classList.remove('fa-pause');
-                playIcon.classList.add('fa-play');
-            }
-        };
-
-        const changeTrack = (direction) => {
-            if (direction === 'next') {
-                currentTrackIndex++;
-                if (currentTrackIndex >= playlist.length) currentTrackIndex = 0;
-            } else {
-                currentTrackIndex--;
-                if (currentTrackIndex < 0) currentTrackIndex = playlist.length - 1;
-            }
-
-            trackTitle.innerText = playlist[currentTrackIndex].title;
-            
-            // Cambio sorgente con link formattato
-            audio.src = formatDropboxUrl(playlist[currentTrackIndex].src);
-            
-            // iOS fix: bisogna chiamare load() prima di play() quando si cambia sorgente dinamicamente
-            audio.load();
-
-            // Se stiamo già suonando o l'utente ha cliccato, proviamo a suonare
-            const playPromise = audio.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    isPlaying = true;
-                    playIcon.classList.remove('fa-play');
-                    playIcon.classList.add('fa-pause');
-                }).catch(e => console.error("Auto-play prevented:", e));
-            }
-        };
-
-        // Inizializza il player
-        initPlayer();
-        audio.volume = 0.5;
-
-        // Event Listeners
-        audioToggle.addEventListener('click', togglePlay);
-        
-        // Modifica: Ora usiamo changeTrack con direzione invece di logica casuale
-        nextBtn.addEventListener('click', () => changeTrack('next'));
-        prevBtn.addEventListener('click', () => changeTrack('prev'));
-
-        volumeSlider.addEventListener('input', (e) => {
-            audio.volume = e.target.value;
-        });
-
-        // Quando finisce la canzone, vai alla prossima
-        audio.addEventListener('ended', () => changeTrack('next'));
-
-    </script>
-
+const togglePlay = () => {
+if (audio.paused) {
+const playPromise = audio.play();
+if (playPromise !== undefined) {
+playPromise.then(() => {
+isPlaying = true;
+playIcon.classList.remove('fa-play');
+playIcon.classList.add('fa-pause');
+}).catch(error => {
+console.error("Errore riproduzione (iOS policy o rete):", error);
+isPlaying = false;
+playIcon.classList.remove('fa-pause');
+playIcon.classList.add('fa-play');
+});
+}
+} else {
+audio.pause();
+isPlaying = false;
+playIcon.classList.remove('fa-pause');
+playIcon.classList.add('fa-play');
+}
+};
+const changeTrack = (direction) => {
+if (direction === 'next') {
+currentTrackIndex++;
+if (currentTrackIndex >= playlist.length) currentTrackIndex = 0;
+} else {
+currentTrackIndex--;
+if (currentTrackIndex < 0) currentTrackIndex = playlist.length - 1;
+}
+trackTitle.innerText = playlist[currentTrackIndex].title;
+audio.src = formatDropboxUrl(playlist[currentTrackIndex].src);
+audio.load();
+const playPromise = audio.play();
+if (playPromise !== undefined) {
+playPromise.then(() => {
+isPlaying = true;
+playIcon.classList.remove('fa-play');
+playIcon.classList.add('fa-pause');
+}).catch(e => console.error("Auto-play prevented:", e));
+}
+};
+initPlayer();
+audio.volume = 0.5;
+audioToggle.addEventListener('click', togglePlay);
+nextBtn.addEventListener('click', () => changeTrack('next'));
+prevBtn.addEventListener('click', () => changeTrack('prev'));
+volumeSlider.addEventListener('input', (e) => {
+audio.volume = e.target.value;
+});
+audio.addEventListener('ended', () => changeTrack('next'));
+</script>
 </body>
 </html>
