@@ -49,7 +49,8 @@
             width: 100%;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: center; /* Cambiato per permettere lo scrolling */
+            align-items: flex-start; 
             overflow-x: hidden;
             position: relative;
             background: transparent;
@@ -105,7 +106,7 @@
             position: relative;
             z-index: 10;
             animation: fadeIn 1s ease-out;
-            margin: 40px 0;
+            margin: 40px auto; /* Centrato con margine */
             transform: translateZ(0);
         }
 
@@ -258,7 +259,7 @@
             to { text-shadow: 0 0 20px rgba(253, 236, 163, 0.8), 0 0 30px #ff0000; }
         }
 
-        /* --- STILE SEZIONI (Curiosità & Radio) --- */
+        /* --- STILE SEZIONI COMUNI --- */
         .section-separator {
             margin-top: 2rem;
             padding-top: 2rem;
@@ -271,7 +272,6 @@
 
         .section-heading {
             font-family: 'Playwrite CU', cursive;
-            /* Modifica per mobile: clamp leggermente ridotto nel minimo e nowrap */
             font-size: clamp(1.3rem, 4vw, 1.8rem); 
             margin-bottom: 1.5rem;
             background: var(--gold-gradient);
@@ -286,8 +286,6 @@
             padding-right: 0.3em; 
             padding-bottom: 0.3em;
             line-height: 1.6;
-            
-            /* MODIFICA RICHIESTA: Impedisce al titolo di andare a capo */
             white-space: nowrap; 
         }
 
@@ -298,19 +296,13 @@
             -webkit-text-fill-color: inherit;
         }
 
-        .fact-text {
-            font-size: 1.1rem;
-            font-style: italic;
-            color: #f0f0f0;
-            min-height: 100px; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 1rem;
-            line-height: 1.6;
-            transition: opacity 0.3s ease-in-out;
-            will-change: opacity;
-            width: 100%;
+        /* Classi aggiuntive per la formattazione mobile dei titoli */
+        .heading-text {
+            text-align: center;
+        }
+
+        .mobile-break {
+            display: inline;
         }
 
         .gold-button {
@@ -339,6 +331,107 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(197, 149, 65, 0.7);
             filter: brightness(1.1);
+        }
+
+        /* --- SEZIONE: Curiosità --- */
+        .fact-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #f0f0f0;
+            min-height: 100px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 1rem;
+            line-height: 1.6;
+            transition: opacity 0.3s ease-in-out;
+            will-change: opacity;
+            width: 100%;
+        }
+
+        /* --- NUOVA SEZIONE: Ricette --- */
+        .recipes-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+        
+        .recipe-card {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: left;
+            transition: transform 0.3s ease, border-color 0.3s;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold-light);
+        }
+
+        .recipe-card h3 {
+            color: var(--gold-light);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .recipe-card p {
+            font-size: 0.95rem;
+            color: #ddd;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        /* --- NUOVA SEZIONE: Lettera a Babbo Natale --- */
+        .santa-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .santa-form input, .santa-form textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: white;
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s, background 0.3s;
+        }
+
+        .santa-form input::placeholder, .santa-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .santa-form input:focus, .santa-form textarea:focus {
+            border-color: var(--gold-light);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .santa-form textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        #letter-status {
+            font-family: 'Playwrite CU', cursive;
+            color: var(--gold-light);
+            margin-top: 10px;
+            min-height: 24px;
+            font-size: 1.1rem;
         }
 
         /* --- STILE RADIO POLO NORD --- */
@@ -382,7 +475,7 @@
             padding-right: 0.3em;
             padding-bottom: 0.3em;
             line-height: 1.6;
-            min-height: 3.2rem; /* Altezza fissa per evitare salti nel layout */
+            min-height: 3.2rem;
         }
 
         .radio-controls {
@@ -457,16 +550,169 @@
             cursor: pointer;
         }
 
+        /* --- STILE MODAL (POP-UP) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: radial-gradient(circle at center, #004a19 0%, #001a05 100%);
+            border: 2px solid var(--gold-dark);
+            border-radius: 24px;
+            padding: 2.5rem 2rem 2rem 2rem;
+            width: 90%;
+            max-width: 650px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6), inset 0 0 20px rgba(197, 149, 65, 0.2);
+            transform: scale(0.95) translateY(20px);
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            font-size: 1.2rem;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: var(--gold-light);
+            color: #002e08;
+            transform: rotate(90deg);
+        }
+
+        .modal-title {
+            font-family: 'Playwrite CU', cursive;
+            color: var(--gold-light);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            margin-top: -0.5rem;
+            border-bottom: 1px solid rgba(253, 236, 163, 0.3);
+            padding-bottom: 10px;
+            padding-right: 30px;
+            padding-left: 30px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .modal-body {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #eee;
+            overflow-y: auto;
+            flex-grow: 1;
+            padding-right: 10px;
+        }
+
+        .modal-body::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .modal-body::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+        
+        .modal-body::-webkit-scrollbar-thumb {
+            background: var(--gold-dark);
+            border-radius: 4px;
+        }
+        
+        .modal-body ul, .modal-body ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .modal-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-body h4 {
+            color: var(--gold-dark);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .recipe-btn {
+            background: transparent;
+            color: var(--gold-light);
+            border: 1px solid var(--gold-light);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .recipe-btn:hover {
+            background: var(--gold-gradient);
+            color: #002e08;
+            border-color: transparent;
+        }
+
         /* --- Media Queries --- */
         @media (max-width: 600px) {
             .main-container {
                 padding: 2rem 1.5rem;
                 width: 95%;
-                margin: 20px 0;
+                margin: 20px auto;
             }
             .countdown-wrapper { gap: 8px; }
             .time-box { border-radius: 12px; padding: 10px 2px; }
             .social-btn { width: 45px; height: 45px; font-size: 1.3rem; }
+            .santa-form { padding: 1.5rem; }
+
+            /* Fix titoli sovrapposti e a capo forzato */
+            .section-heading {
+                white-space: normal;
+            }
+            .mobile-break {
+                display: block;
+            }
         }
 
         @media (max-width: 1024px) {
@@ -545,6 +791,41 @@
             </button>
         </section>
 
+        <!-- NUOVA SEZIONE: La Cucina di Mamma Natale -->
+        <section id="recipes" class="section-separator">
+            <h2 class="section-heading">
+                <i class="fa-solid fa-cookie-bite"></i>
+                <span class="heading-text">La Cucina <span class="mobile-break">di Mamma Natale</span></span>
+            </h2>
+            <p style="color: #ddd; margin-bottom: 1rem; font-size: 0.95rem;">Prepara l'atmosfera con i classici del Polo Nord!</p>
+            
+            <button id="refresh-recipes-btn" class="gold-button" style="margin-bottom: 2rem;" onclick="generateNewRecipes()">
+                <i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 8px;"></i> Crea Nuove Ricette Magiche
+            </button>
+
+            <div class="recipes-container" id="recipes-container">
+                <!-- Le ricette verranno inserite qui dinamicamente -->
+            </div>
+        </section>
+
+        <!-- NUOVA SEZIONE: Scrivi a Babbo Natale -->
+        <section id="write-to-santa" class="section-separator">
+            <h2 class="section-heading">
+                <i class="fa-solid fa-envelope-open-text"></i>
+                Scrivi a Babbo Natale
+            </h2>
+            <p style="color: #ddd; margin-bottom: 1.5rem; font-size: 0.95rem;">La cassetta delle lettere magica è aperta tutto l'anno!</p>
+            
+            <form id="santa-form" class="santa-form" onsubmit="sendMagicalLetter(event)">
+                <input type="text" id="santa-name" placeholder="Il tuo nome (es. Giulia)" required>
+                <textarea id="santa-wish" placeholder="Caro Babbo Natale, quest'anno vorrei..." required></textarea>
+                <button type="submit" class="gold-button" id="send-letter-btn">
+                    <i class="fa-solid fa-paper-plane" style="margin-right: 8px;"></i> Spedisci al Polo Nord
+                </button>
+                <div id="letter-status"></div>
+            </form>
+        </section>
+
         <!-- SEZIONE: Radio del Polo Nord -->
         <section id="north-pole-radio" class="section-separator">
             <h2 class="section-heading">
@@ -559,7 +840,6 @@
                 </div>
                 
                 <div class="radio-controls">
-                    <!-- MODIFICA: Pulsante Indietro invece di Shuffle -->
                     <button class="control-btn" id="prev-btn" aria-label="Brano Precedente">
                         <i class="fa-solid fa-backward-step"></i>
                     </button>
@@ -587,7 +867,44 @@
 
     </div>
 
+    <!-- MODAL POP-UP -->
+    <div id="magic-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h3 id="modal-title" class="modal-title">Titolo</h3>
+            <div id="modal-body" class="modal-body">
+                Contenuto
+            </div>
+        </div>
+    </div>
+
     <script>
+        // --- LOGICA IA E MODAL ---
+        const apiKey = "AQ.Ab8RN6JFMomuysluwjbvKcnvLeaAYlnq3p-ah69hHuW5LdSs_g";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+        const magicModal = document.getElementById('magic-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+
+        const openModal = (title, contentHTML) => {
+            modalTitle.innerHTML = title;
+            modalBody.innerHTML = contentHTML;
+            magicModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Blocca lo scroll di sfondo
+        };
+
+        const closeModal = () => {
+            magicModal.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        // Chiudi modal cliccando fuori
+        magicModal.addEventListener('click', (e) => {
+            if (e.target === magicModal) closeModal();
+        });
+
+
         // --- LOGICA COUNTDOWN ---
         const titleElement = document.getElementById('main-title');
         const countdownContainer = document.getElementById('countdown-container');
@@ -655,6 +972,228 @@
         setInterval(countdown, 1000);
         countdown();
 
+        // --- LOGICA LETTERA A BABBO NATALE (IA) ---
+        const sendMagicalLetter = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('send-letter-btn');
+            const status = document.getElementById('letter-status');
+            const form = document.getElementById('santa-form');
+            const name = document.getElementById('santa-name').value;
+            const wish = document.getElementById('santa-wish').value;
+
+            // UI Loading
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            status.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Gli elfi stanno recapitando la lettera...`;
+
+            try {
+                // Prompt per Gemini
+                const prompt = `Agisci come Babbo Natale in persona. Scrivi una dolce, breve e magica lettera di risposta a un bambino/a o ragazzo/a di nome ${name} che per Natale ti ha appena chiesto: "${wish}". Il tono deve essere festoso, incoraggiante, rassicurante e molto affettuoso. Scrivi massimo 3-4 frasi. Usa la lingua italiana.`;
+                
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }]
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates[0].content.parts[0].text) {
+                    const santaReply = result.candidates[0].content.parts[0].text;
+                    
+                    form.reset();
+                    status.innerHTML = `<i class="fa-solid fa-check" style="color: #25D366;"></i> Lettera consegnata con magia!`;
+                    
+                    // Mostra la risposta di Babbo Natale nel modal
+                    setTimeout(() => {
+                        openModal(
+                            `<i class="fa-solid fa-envelope-open-text"></i> Risposta dal Polo Nord`, 
+                            `<p style="font-family: 'Playwrite CU', cursive; font-size: 1.2rem; line-height: 1.8; color: var(--gold-light); text-align: center; padding: 1rem;">
+                                "${santaReply.replace(/\n/g, '<br>')}"
+                            </p>
+                            <p style="text-align: right; margin-top: 2rem; font-style: italic;">Con affetto,<br>🎅 Babbo Natale</p>`
+                        );
+                        status.innerHTML = '';
+                    }, 1000);
+
+                } else {
+                    throw new Error("Risposta non valida dall'IA");
+                }
+
+            } catch (error) {
+                console.error("Errore nell'invio della lettera:", error);
+                status.innerHTML = `<i class="fa-solid fa-circle-exclamation" style="color: #ff4444;"></i> Oh no! Una tempesta di neve ha bloccato la connessione. Riprova!`;
+            } finally {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            }
+        };
+
+        // --- LOGICA RICETTARIO MAGICO (IA) ---
+        let currentRecipes = [
+            {
+                titolo: "Biscotti Pan di Zenzero",
+                icona: "fa-cookie",
+                breve_descrizione: "Il profumo chiamerà gli elfi! Un classico intramontabile.",
+                ingredienti: ["350g di Farina Magica", "150g di Burro della Renna", "150g Zucchero di Canna", "1 Uovo", "Miele, Zenzero e Cannella q.b."],
+                procedimento: ["Impasta tutto con amore finché non ottieni un panetto liscio.", "Stendi la frolla e ritaglia i tuoi omini.", "Inforna a 180° per 12 minuti.", "Decora con glassa zuccherata!"]
+            },
+            {
+                titolo: "Cioccolata Calda Suprema",
+                icona: "fa-mug-hot",
+                breve_descrizione: "La bevanda preferita di Babbo Natale dopo un lungo viaggio.",
+                ingredienti: ["500ml Latte intero", "100g Cioccolato fondente (70%)", "1 cucchiaio Cacao amaro", "Panna montata a volontà", "Marshmallow magici"],
+                procedimento: ["Scalda il latte dolcemente senza farlo bollire.", "Sciogli il cioccolato e il cacao girando con un cucchiaio di legno.", "Versa in una grande tazza.", "Servi con una montagna di panna e marshmallow!"]
+            }
+        ];
+
+        const recipesContainer = document.getElementById('recipes-container');
+        const refreshRecipesBtn = document.getElementById('refresh-recipes-btn');
+
+        const renderRecipes = () => {
+            recipesContainer.innerHTML = '';
+            currentRecipes.forEach((recipe, index) => {
+                const card = document.createElement('div');
+                card.className = 'recipe-card';
+                card.innerHTML = `
+                    <h3><i class="fa-solid ${recipe.icona}"></i> ${recipe.titolo}</h3>
+                    <p>${recipe.breve_descrizione}</p>
+                    <button class="recipe-btn" onclick="showRecipeDetails(${index})">
+                        <i class="fa-solid fa-book-open"></i> Leggi Ricetta
+                    </button>
+                `;
+                recipesContainer.appendChild(card);
+            });
+        };
+
+        const showRecipeDetails = (index) => {
+            const recipe = currentRecipes[index];
+            const ingredientsHTML = recipe.ingredienti.map(ing => `<li>${ing}</li>`).join('');
+            const stepsHTML = recipe.procedimento.map(step => `<li>${step}</li>`).join('');
+            
+            const content = `
+                <h4><i class="fa-solid fa-basket-shopping"></i> Ingredienti Magici:</h4>
+                <ul>${ingredientsHTML}</ul>
+                <h4><i class="fa-solid fa-hat-wizard"></i> Procedimento:</h4>
+                <ol>${stepsHTML}</ol>
+                <p style="text-align: center; margin-top: 2rem; font-style: italic; color: var(--gold-light);">Buon appetito e Buon Natale! 🤶</p>
+                <button class="gold-button" onclick="printRecipe(${index})" style="width: 100%; margin-top: 1.5rem; justify-content: center;">
+                    <i class="fa-solid fa-print" style="margin-right: 8px;"></i> Stampa Ricetta
+                </button>
+            `;
+            openModal(`<i class="fa-solid ${recipe.icona}"></i> ${recipe.titolo}`, content);
+        };
+
+        const printRecipe = (index) => {
+            const recipe = currentRecipes[index];
+            const printWindow = window.open('', '_blank');
+            
+            const ingredientsHTML = recipe.ingredienti.map(ing => `<li>${ing}</li>`).join('');
+            const stepsHTML = recipe.procedimento.map(step => `<li>${step}</li>`).join('');
+
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>${recipe.titolo} - La Cucina di Mamma Natale</title>
+                    <style>
+                        body { font-family: 'Arial', sans-serif; padding: 40px; color: #333; max-width: 800px; margin: 0 auto; }
+                        h1 { color: #d32f2f; text-align: center; font-size: 2.5em; margin-bottom: 10px; }
+                        .desc { text-align: center; font-style: italic; color: #666; margin-bottom: 30px; font-size: 1.1em; }
+                        h2 { color: #2e7d32; margin-top: 30px; border-bottom: 2px solid #2e7d32; padding-bottom: 5px; }
+                        ul, ol { line-height: 1.8; font-size: 1.1em; }
+                        li { margin-bottom: 8px; }
+                        .footer { text-align: center; margin-top: 50px; font-style: italic; color: #888; border-top: 1px solid #ccc; padding-top: 20px; }
+                        @media print {
+                            body { padding: 0; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>${recipe.titolo}</h1>
+                    <div class="desc">${recipe.breve_descrizione}</div>
+                    
+                    <h2>Ingredienti Magici:</h2>
+                    <ul>${ingredientsHTML}</ul>
+                    
+                    <h2>Procedimento:</h2>
+                    <ol>${stepsHTML}</ol>
+                    
+                    <div class="footer">🎄 Ricetta magica stampata da Christmas Wonder Shop 🎄</div>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.focus();
+            setTimeout(() => {
+                printWindow.print();
+                printWindow.close();
+            }, 250);
+        };
+
+        const generateNewRecipes = async () => {
+            const originalText = refreshRecipesBtn.innerHTML;
+            refreshRecipesBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin" style="margin-right: 8px;"></i> Mamma Natale sta inventando...`;
+            refreshRecipesBtn.disabled = true;
+
+            try {
+                const payload = {
+                    contents: [{ parts: [{ text: "Genera 2 ricette natalizie creative, accoglienti e magiche per 'La Cucina di Mamma Natale'. Usa ingredienti veri ma dai loro nomi creativi e magici. Lingua: italiano." }] }],
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "ARRAY",
+                            items: {
+                                type: "OBJECT",
+                                properties: {
+                                    titolo: { type: "STRING" },
+                                    icona: { type: "STRING", description: "Esatto nome classe FontAwesome, es: fa-candy-cane, fa-cake-candles, fa-snowflake, fa-star" },
+                                    breve_descrizione: { type: "STRING" },
+                                    ingredienti: { type: "ARRAY", items: { type: "STRING" } },
+                                    procedimento: { type: "ARRAY", items: { type: "STRING" } }
+                                },
+                                required: ["titolo", "icona", "breve_descrizione", "ingredienti", "procedimento"]
+                            }
+                        }
+                    }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates[0].content.parts[0].text) {
+                    const newRecipes = JSON.parse(result.candidates[0].content.parts[0].text);
+                    currentRecipes = newRecipes;
+                    
+                    // Aggiungi animazione di transizione
+                    recipesContainer.style.opacity = 0;
+                    setTimeout(() => {
+                        renderRecipes();
+                        recipesContainer.style.transition = 'opacity 0.5s ease';
+                        recipesContainer.style.opacity = 1;
+                    }, 300);
+                }
+            } catch (error) {
+                console.error("Errore nella generazione delle ricette:", error);
+                alert("Oh no! Il forno magico ha avuto un imprevisto. Riprova più tardi!");
+            } finally {
+                refreshRecipesBtn.innerHTML = originalText;
+                refreshRecipesBtn.disabled = false;
+            }
+        };
+
+        // Render iniziale ricette
+        renderRecipes();
+
+
         // --- LOGICA CURIOSITA' ---
         const funFacts = [
             "Sapevi che Babbo Natale è noto come 'Sinterklaas' nei Paesi Bassi?",
@@ -700,9 +1239,6 @@
         currentFactIndex = 1;
 
         // --- LOGICA RADIO POLO NORD ---
-        
-        // Funzione per convertire i link Dropbox per iOS/Streaming diretto
-        // Sostituisce www.dropbox.com con dl.dropboxusercontent.com
         const formatDropboxUrl = (url) => {
             return url.replace('www.dropbox.com', 'dl.dropboxusercontent.com').replace('?dl=1', '');
         };
@@ -749,15 +1285,12 @@
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
 
-        // Caricamento iniziale (senza play automatico)
         const initPlayer = () => {
             trackTitle.innerText = playlist[currentTrackIndex].title;
-            // Precarichiamo l'URL formattato correttamente per iOS
             audio.src = formatDropboxUrl(playlist[currentTrackIndex].src);
             audio.load();
         };
 
-        // Funzione Play/Pause sicura per iOS
         const togglePlay = () => {
             if (audio.paused) {
                 const playPromise = audio.play();
@@ -767,8 +1300,7 @@
                         playIcon.classList.remove('fa-play');
                         playIcon.classList.add('fa-pause');
                     }).catch(error => {
-                        console.error("Errore riproduzione (iOS policy o rete):", error);
-                        // Su iOS, se fallisce, a volte bisogna ricaricare e riprovare
+                        console.error("Errore riproduzione:", error);
                         isPlaying = false;
                         playIcon.classList.remove('fa-pause');
                         playIcon.classList.add('fa-play');
@@ -792,14 +1324,9 @@
             }
 
             trackTitle.innerText = playlist[currentTrackIndex].title;
-            
-            // Cambio sorgente con link formattato
             audio.src = formatDropboxUrl(playlist[currentTrackIndex].src);
-            
-            // iOS fix: bisogna chiamare load() prima di play() quando si cambia sorgente dinamicamente
             audio.load();
 
-            // Se stiamo già suonando o l'utente ha cliccato, proviamo a suonare
             const playPromise = audio.play();
             if (playPromise !== undefined) {
                 playPromise.then(() => {
@@ -810,14 +1337,10 @@
             }
         };
 
-        // Inizializza il player
         initPlayer();
         audio.volume = 0.5;
 
-        // Event Listeners
         audioToggle.addEventListener('click', togglePlay);
-        
-        // Modifica: Ora usiamo changeTrack con direzione invece di logica casuale
         nextBtn.addEventListener('click', () => changeTrack('next'));
         prevBtn.addEventListener('click', () => changeTrack('prev'));
 
@@ -825,7 +1348,6 @@
             audio.volume = e.target.value;
         });
 
-        // Quando finisce la canzone, vai alla prossima
         audio.addEventListener('ended', () => changeTrack('next'));
 
     </script>
